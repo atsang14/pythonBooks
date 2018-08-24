@@ -58,6 +58,8 @@ app.post('/create', function(req, res){
 	);
 });
 
+// this is the api where we can grab information and use it in the 
+// ajax requests.
 app.get('/api', function(req, res){
 	connection.query('SELECT * FROM getInput', function (error, results, fields) {
     	if (error) throw error;
@@ -65,10 +67,12 @@ app.get('/api', function(req, res){
   	});
 });
 
+// here in postings route, we bring up the postings.html file.
+// Then, in the postings.html file we specifiy we are using
+// the post.js javascript file and request the api from our database.
 app.get('/postings', function(req, res){
 	res.sendFile(path.join(__dirname, "public/postings.html"));
 });
-
 
 
 

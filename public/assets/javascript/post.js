@@ -26,6 +26,7 @@ $.ajax({
 
 
 	// next thing to do is create the text as a link to bring up that users information
+	// maybe instead of using a <p>, we can use an <a>
 	var p, ob, form;
 	for(var i = 0; i < data.length; i++) {
 		ob = data[i];
