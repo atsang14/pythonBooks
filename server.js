@@ -36,6 +36,7 @@ var connection = mysql.createConnection({
 });
 
 // since this is a practice file, i used create.html as the default route.
+// path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, "public/create.html"));
 });
@@ -48,22 +49,25 @@ app.post('/create', function(req, res){
 	
 	// run query to insert into table getInput
 	var query = connection.query(
-	  "INSERT INTO getInput SET ?",
-	  req.body,
-	  function(err, response) {
-	  	if(err) console.log(err);
-	    res.redirect('/');
+	  	"INSERT INTO getInput SET ?",
+	  	req.body,
+	  	function(err, response) {
+		  	if(err) console.log(err);
+		    res.redirect('/');
 	  }
 	);
 });
 
+app.get('/api', function(req, res){
+	connection.query('SELECT * FROM getInput', function (error, results, fields) {
+    	if (error) throw error;
+    	res.json(results);
+  	});
+});
 
-
-
-
-
-
-
+app.get('/postings', function(req, res){
+	res.sendFile(path.join(__dirname, "public/postings.html"));
+});
 
 
 
