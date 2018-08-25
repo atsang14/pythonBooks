@@ -2,21 +2,10 @@
 <html>
 <head>
 	<title></title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<style type="text/css">
-	.search-container {
-		height: 100%;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-	}
-</style>
 </head>
 <body>
-
 <div class="container example-7">
   	<nav class="navbar navbar-default">
     	<div class="container-fluid">
@@ -47,35 +36,21 @@
     <!--/.container-fluid -->
   	</nav>
 
-	<div align="center">
-	  	<form name="searchform" onSubmit="return dosearch();">
-			<br /> <br /><br /><br /><br /><br /><br /><br /><br /><br />
-
-			<input type="text"  placeholder="search here" name="searchterms">
-			<input type="submit" name="SearchSubmit" value="Search">
-
-			<!-- row to make neater. This row makes the radio buttons 
-				under the search bar-->
-			<div class="row">
-				<form>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio" checked>CRN
-				    </label>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio">Course
-				    </label>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio">Book Name
-				   	</label>
-				   	<label class="radio-inline">
-				      	<input type="radio" name="optradio" checked>ISBN
-				    </label>
-  				</form>
-			</div>
-		</form>
-	</div>
+  	<a href='/api'>api</a>
+	<a href='/postings'>postings</a>
+	
+	<form method="POST" action="/create">
+		<input type="number" name="price" placeholder="Enter Your Price">
+		<input type="number" name="ISBN" placeholder="Enter the ISBN">
+		<button>submit</button>
+	</form>
 </div>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -83,5 +58,11 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
 </script>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript" src="assets/javascript/post.js"></script>
 </body>
 </html>
