@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<style type="text/css">
+	.search-container {
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+	}
+</style>
+</head>
+<body>
+
+<div class="container example-7">
+  	<nav class="navbar navbar-default">
+    	<div class="container-fluid">
+        	<div class="navbar-header">
+		        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar7">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+		        </button>
+	     		</a>
+	      	</div>
+      
+
+      
+	    	<div id="navbar7" class="navbar-collapse collapse">
+			    <ul class="nav navbar-nav navbar-left">
+				    <li class="active"><a href="">Home</a></li>
+				    <li><a href="">Postings</a></li>
+				    <li><a href="">Sell</a></li>
+				    <li><a href="">Support</a></li>
+				    <li><a href="">About</a></li>
+			    </ul>
+			    <ul class="nav navbar-nav navbar-right">
+			       	<li class="active"><a href="">Login</a></li>
+			    </ul>
+	    	</div>
+      <!--/.nav-collapse -->
+    	</div>
+    <!--/.container-fluid -->
+  	</nav>
+
+<!--   	<div class='search-container'>
+  		<div class="row">
+  		<i id="search" class="fas fa-search fa-3x hide"></i>
+    	<input type='text' placeholder='dont forget to press the search button!' class='search-input'>
+  		<span id="btn">
+    		<i id="slide" class="fas fa-search fa-search-1 fa-3x"></i>
+  		</span> 
+  		</div>
+  		<div class="row">
+		    <div class="col-xs-12">
+		      	<hr> Horizontal radio:
+		      	<br>
+		      	<div class="btn-group" data-toggle="buttons">
+			        <label class="btn">
+				        <input type="radio" name='gender2' checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Male</span>
+			        </label>
+
+			        <label class="btn">
+			          	<input type="radio" name='gender2'><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-check-circle-o fa-2x"></i><span> Female</span>
+			        </label>
+      			</div>
+      	    </div>
+  		</div>
+ -->
+	<div align="center">
+	  	<form name="searchform" onSubmit="return dosearch();">
+			<br /> <br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+			<input type="text"  placeholder="search here" name="searchterms">
+			<input type="submit" name="SearchSubmit" value="Search">
+			
+			<!-- row to make neater. This row makes the radio buttons 
+				under the search bar-->
+			<div class="row">
+				<!-- radio buttons -->
+				<label class="radio-inline">
+			      	<input type="radio" name="" checked>CRN
+			    </label>
+			    <label class="radio-inline">
+			      	<input type="radio" name="">Course
+			    </label>
+			    <label class="radio-inline">
+			      	<input type="radio" name="">Book Name
+			    </label>
+			    <label class="radio-inline">
+			      	<input type="radio" name="">ISBN
+			    </label>
+			</div>	
+		</form>
+	</div>
+ 		
+	</div>
+</div>
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+</body>
+</html>

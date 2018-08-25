@@ -45,8 +45,11 @@ app.get('/', function(req, res) {
 // when user submits the information in the create.html file, insert into the project2Practice database.
 app.post('/create', function(req, res){
 	console.log(req.body);
+
+	// here i manually put in a user name because we have not yet created
+	// any users. We may use this method again when we grab a user information from a 'users' table.
 	req.body.user_name = 'Austin';
-	
+
 	// run query to insert into table getInput
 	var query = connection.query(
 	  	"INSERT INTO getInput SET ?",
