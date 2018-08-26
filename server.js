@@ -58,7 +58,7 @@ app.post('/create', function(req, res){
 	  	function(err, response) {
 		  	if(err) console.log(err);
 		    res.redirect('/');
-	  }
+	  	}
 	);
 });
 
