@@ -40,9 +40,19 @@ app.get('/', function(req, res){
 	res.sendFile(path.join(__dirname, "public/testLogin.html"));
 });
 
-app.get('/login', function(req,res) {
-	res.sendFile(path.join(__dirname, "public/login.html"))
-})
+app.get('/loginPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "public/login.html"));
+});
+
+app.get('/registerPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "public/register.html"));
+});
+
+app.get('/register', function(req,res) {
+	
+});
+
+
 
 
 
