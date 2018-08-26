@@ -4,6 +4,15 @@ var app 	= express();
 var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
 
+//you need this to be able to process information sent to a POST route
+	var bodyParser = require('body-parser');
+
+	// parse application/x-www-form-urlencoded
+	app.use(bodyParser.urlencoded({ extended: true }));
+
+	// parse application/json
+	app.use(bodyParser.json());
+
 //session stuff
 	var cookieParser = require('cookie-parser');
 
@@ -48,9 +57,15 @@ app.get('/registerPage', function(req,res) {
 	res.sendFile(path.join(__dirname, "public/register.html"));
 });
 
-app.get('/register', function(req,res) {
+app.post('/register', function(req,res) {
 	
+	console.log(req.body);
+	res.redirect('/');
 });
+
+
+
+
 
 
 
