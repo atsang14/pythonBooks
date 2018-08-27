@@ -4,6 +4,8 @@ var app 	= express();
 var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
 
+app.use(express.static("public"));
+
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
 
@@ -28,7 +30,7 @@ var connection = mysql.createConnection({
 	host: "localhost",
 
 	// Your port; if not 3306
-	port: 3000,
+	port: 3306,
 
 	// Your username
 	user: "root",
@@ -38,7 +40,13 @@ var connection = mysql.createConnection({
 	database: "project2Practice"
 });
 
-app.use(express.static("public"));
+
+connection.query('SELECT * FROM users', function(err,res) {
+	if(err) console.log(err);
+	else {
+		console.log(res);
+	}
+})
 
 
 // this get request brings the use to the root route. 
@@ -57,15 +65,71 @@ app.get('/registerPage', function(req,res) {
 	res.sendFile(path.join(__dirname, "public/register.html"));
 });
 
+// this doesn't work right now 
 app.post('/register', function(req,res) {
-	
-	console.log(req.body);
-	res.redirect('/');
+	bcrypt.genSalt(10, function(err, salt) {
+		bcrypt.hash(req.body.password_hash, salt, function(err, p_hash) {
+			console.log(p_hash);
+			console.log(req.body.email);
+			console.log(req.body.user_name);
+
+			var query = 'INSERT INTO users (email, user_name, password_hash) VALUES ("'+req.body.email+'", "'+req.body.user_name+'", "'+p_hash+'");'
+
+			connection.query(query, function (error, results, fields) {
+	    	  	console.log('--------');
+		    	var what_user_sees = "";
+		    	if (error){
+		    		console.log(err);
+		    		console.log('--------');
+		    	  	what_user_sees = 'you need to use a unique email';
+		    	}else{
+		    	  	what_user_sees = 'you have signed up - please go login at the login route';
+		    	}
+		    	// res.send(what_user_sees);
+	    	  	res.redirect('/');
+	    	});
+		});
+	});
 });
 
 
+app.get('/loginPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "public/login.html"));
+});
 
+app.post('/login', function(req,res) {
+	// console.log(req.body.email);
+	// console.log(req.body.password_hash);
+	// var query = connection.query('SELECT * FROM users',  function(error, response, fields) {
+	// 	console.log(response);
+	// 	connection.end();
+	// 	res.redirect('/');
+	// })
 
+	connection.query('SELECT * FROM users WHERE email = ?', [req.params.email],function (error, results, fields) {
+
+	  if (error) throw error;
+
+	  // res.json(results);
+	  if (results.length == 0){
+	  	res.send('try again');
+	  }else {
+	  	bcrypt.compare(req.params.password, results[0].password_hash, function(err, result) {
+	  	    
+	  	    if (result == true){
+
+	  	      req.session.user_id = results[0].id;
+	  	      req.session.email = results[0].email;
+
+	  	      res.send('you are logged in');
+
+	  	    }else{
+	  	      res.redirect('/');
+	  	    }
+	  	});
+	  }
+	});
+})
 
 
 
