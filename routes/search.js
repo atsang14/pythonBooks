@@ -3,15 +3,16 @@ var express = require('express');
 var app 	= express();
 var path 	= require("path");
 var mysql   = require('mysql');
+var router = express.Router();
 
-//you need this to be able to process information sent to a POST route
-	var bodyParser = require('body-parser');
+// //you need this to be able to process information sent to a POST route
+// 	var bodyParser = require('body-parser');
 
-	// parse application/x-www-form-urlencoded
-	app.use(bodyParser.urlencoded({ extended: true }));
+// 	// parse application/x-www-form-urlencoded
+// 	app.use(bodyParser.urlencoded({ extended: true }));
 
-	// parse application/json
-	app.use(bodyParser.json());
+// 	// parse application/json
+// 	app.use(bodyParser.json());
 
 var path = require("path");
 
@@ -37,12 +38,12 @@ var connection = mysql.createConnection({
 
 // since this is a practice file, i used create.html as the default route.
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
-app.get('/', function(req, res) {
+router.get('/', function(req, res) {
 	// res.sendFile(path.join(__dirname, "public/create.html"));
-	res.sendFile(path.join(__dirname, "public/home.html"));
+	res.sendFile(path.join(__dirname, "../public/home.html"));
 });
 
-app.post('/search', function(req, res){
+router.post('/search', function(req, res){
 	console.log(req);
 	console.log("-----")
 	console.log(req.body.searchterms)
@@ -59,10 +60,8 @@ app.post('/search', function(req, res){
 	
 })
 
-app.get('/searchResults', function (req, res){
-	res.sendFile(path.join(__dirname, "public/searchResults.html"));
+router.get('/searchResults', function (req, res){
+	res.sendFile(path.join(__dirname, "../public/searchResults.html"));
 })
 
-app.listen(3000, function(){
-	console.log('listening on 3000');
-});
+module.exports = router;

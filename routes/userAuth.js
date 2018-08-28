@@ -3,8 +3,9 @@ var express = require('express');
 var app 	= express();
 var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
+var router = express.Router();
 
-app.use(express.static("public"));
+router.use(express.static("../public"));
 
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
@@ -44,20 +45,20 @@ var connection = mysql.createConnection({
 // This request is meant to bring the user to the lgoin page. 
 // We will change the route when we want to integrate to login page.
 // We will also change the file path as well to the correct login prompt
-app.get('/', function(req, res){
-	res.sendFile(path.join(__dirname, "public/testLogin.html"));
+router.get('/', function(req, res){
+	res.sendFile(path.join(__dirname, "../public/home.html"));
 });
 
-app.get('/loginPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "public/login.html"));
+router.get('/loginPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
-app.get('/registerPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "public/register.html"));
+router.get('/registerPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "../public/register.html"));
 })
 
 // this doesn't work right now 
-app.post('/register', function(req,res) {
+router.post('/register', function(req,res) {
 
 	bcrypt.genSalt(10, function(err, salt) {
 
@@ -79,11 +80,11 @@ app.post('/register', function(req,res) {
 	});
 });
 
-app.get('/loginPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "public/login.html"));
+router.get('/loginPage', function(req,res) {
+	res.sendFile(path.join(__dirname, "../public/login.html"));
 });
 
-app.post('/login', function(req,res) {
+router.post('/login', function(req,res) {
 
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
@@ -99,8 +100,8 @@ app.post('/login', function(req,res) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
 		  	      	// req.session.user_name = results[0].email;
-		  	      	createLoggout();
-		  	      	console.log('line 104')
+		  	      	
+		  	      	
 		  	      	res.send('you are logged in');
 
 		  	    }else {
@@ -111,30 +112,6 @@ app.post('/login', function(req,res) {
 	});
 })
 
-function createLoggout() {
-	console.log('line 115')
-	app.get('/createLoggout', function() {
-		console.log('line 118');
-	})
-}
 
 
-
-
-app.listen(3000, function(){
-	console.log('listening on 3000');
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+module.exports = router;

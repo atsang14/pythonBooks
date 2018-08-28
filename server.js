@@ -4,6 +4,7 @@ var app 	= express();
 var path 	= require("path");
 var mysql   = require('mysql');
 
+
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
 
@@ -34,6 +35,11 @@ var connection = mysql.createConnection({
   password: "password",
   database: "project2Practice"
 });
+
+var userAuthRoutes = require('./routes/userAuth.js');
+var searchRoutes = require('./routes/search.js');
+app.use('/', userAuthRoutes);
+app.use('/', searchRoutes);
 
 // since this is a practice file, i used create.html as the default route.
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
