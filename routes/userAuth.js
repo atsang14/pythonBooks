@@ -38,7 +38,7 @@ var connection = mysql.createConnection({
 
 	// Your password
 	password: "password",
-	database: "project2Practice"
+	database: "pythonbooks_db"
 });
 
 // this get request brings the use to the root route. 
@@ -46,15 +46,15 @@ var connection = mysql.createConnection({
 // We will change the route when we want to integrate to login page.
 // We will also change the file path as well to the correct login prompt
 router.get('/', function(req, res){
-	res.render("../views/pages/home");
+	res.render("pages/home");
 });
 
 router.get('/loginPage', function(req,res) {
-	res.render("../views/pages/login");
+	res.render("pages/login");
 });
 
 router.get('/registerPage', function(req,res) {
-	res.render("../views/pages/register");
+	res.render("pages/register");
 })
 
 // this doesn't work right now 
@@ -81,7 +81,8 @@ router.post('/register', function(req,res) {
 });
 
 router.get('/loginPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "../public/login.html"));
+	// res.sendFile(path.join(__dirname, "../public/login.html"));
+	res.render('login.html');
 });
 
 router.post('/login', function(req,res) {

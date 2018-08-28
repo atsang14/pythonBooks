@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "ym",
+  password: "password",
   database: "pythonbooks_db"
 });
 

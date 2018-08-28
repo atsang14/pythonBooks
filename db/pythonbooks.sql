@@ -7,8 +7,8 @@ use pythonbooks_db;
 CREATE TABLE users(
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) NOT NULL,
-  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   rating_value FLOAT (11,2) NOT NULL, 
   rating_number INT NOT NULL, 

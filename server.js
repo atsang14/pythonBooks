@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
 
   // Your password
   password: "password",
-  database: "project2Practice"
+  database: "pythonbooks_db"
 });
 
 var userAuthRoutes = require('./routes/userAuth.js');
@@ -48,8 +48,7 @@ app.get('/', function(req, res) {
 	res.render("pages/home");
 });
 
-
-// when user submits the information in the create.html file, insert into the project2Practice database.
+// when user submits the information in the create.html file, insert into the database.
 app.post('/create', function(req, res){
 	console.log(req.body);
 
@@ -57,6 +56,8 @@ app.post('/create', function(req, res){
 	// any users. We may use this method again when we grab a user information from a 'users' table.
 	req.body.user_name = 'Austin';
 
+
+	// --- THIS LINE WILL RUN INTO AN ERROR BECAUSE THE TABLE NAME MUST BE CHANGED ---
 	// run query to insert into table getInput
 	var query = connection.query(
 	  	"INSERT INTO getInput SET ?",
@@ -69,7 +70,7 @@ app.post('/create', function(req, res){
 });
 
 // this is the api where we can grab information and use it in the 
-// ajax requests.
+// ajax requests in post.js file
 app.get('/api', function(req, res){
 	connection.query('SELECT * FROM getInput', function (error, results, fields) {
     	if (error) throw error;
@@ -81,10 +82,9 @@ app.get('/api', function(req, res){
 // Then, in the postings.html file we specifiy we are using
 // the post.js javascript file and request the api from our database.
 app.get('/postings', function(req, res){
-	res.sendFile(path.join(__dirname, "public/postings.html"));
+	// res.sendFile(path.join(__dirname, "postings.html"));
+	res.render('pages/postings');
 });
-
-
 
 
 app.listen(3000, function(){
