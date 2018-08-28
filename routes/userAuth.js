@@ -46,15 +46,15 @@ var connection = mysql.createConnection({
 // We will change the route when we want to integrate to login page.
 // We will also change the file path as well to the correct login prompt
 router.get('/', function(req, res){
-	res.sendFile(path.join(__dirname, "../public/home.html"));
+	res.render("../views/pages/home");
 });
 
 router.get('/loginPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "../public/login.html"));
+	res.render("../views/pages/login");
 });
 
 router.get('/registerPage', function(req,res) {
-	res.sendFile(path.join(__dirname, "../public/register.html"));
+	res.render("../views/pages/register");
 })
 
 // this doesn't work right now 

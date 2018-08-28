@@ -13,6 +13,7 @@ var router = express.Router();
 
 // 	// parse application/json
 // 	app.use(bodyParser.json());
+app.set ('view engine', 'ejs')
 
 var path = require("path");
 
@@ -40,7 +41,7 @@ var connection = mysql.createConnection({
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 router.get('/', function(req, res) {
 	// res.sendFile(path.join(__dirname, "public/create.html"));
-	res.sendFile(path.join(__dirname, "../public/home.html"));
+	res.render("pages/home");
 });
 
 router.post('/search', function(req, res){
@@ -61,7 +62,7 @@ router.post('/search', function(req, res){
 })
 
 router.get('/searchResults', function (req, res){
-	res.sendFile(path.join(__dirname, "../public/searchResults.html"));
+	res.render("pages/searchResults");
 })
 
 module.exports = router;

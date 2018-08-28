@@ -4,7 +4,7 @@ var app 	= express();
 var path 	= require("path");
 var mysql   = require('mysql');
 
-
+app.set('view engine','ejs');
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
 
@@ -45,7 +45,7 @@ app.use('/', searchRoutes);
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 app.get('/', function(req, res) {
 	// res.sendFile(path.join(__dirname, "public/create.html"));
-	res.sendFile(path.join(__dirname, "public/home.html"));
+	res.render("pages/home");
 });
 
 
