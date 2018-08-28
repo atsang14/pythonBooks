@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
 	res.render("pages/home");
 });
 
-// when user submits the information in the create.html file, insert into the database.
+// Here.. /create is basically SELL. Look at create.html and that routes to this request
 app.post('/create', function(req, res){
 	console.log(req.body);
 
