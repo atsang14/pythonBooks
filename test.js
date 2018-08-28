@@ -40,15 +40,6 @@ var connection = mysql.createConnection({
 	database: "project2Practice"
 });
 
-
-connection.query('SELECT * FROM users', function(err,res) {
-	if(err) console.log(err);
-	else {
-		console.log(res);
-	}
-})
-
-
 // this get request brings the use to the root route. 
 // This request is meant to bring the user to the lgoin page. 
 // We will change the route when we want to integrate to login page.
@@ -63,26 +54,22 @@ app.get('/loginPage', function(req,res) {
 
 app.get('/registerPage', function(req,res) {
 	res.sendFile(path.join(__dirname, "public/register.html"));
-});
+})
 
 // this doesn't work right now 
 app.post('/register', function(req,res) {
+
 	bcrypt.genSalt(10, function(err, salt) {
+
 		bcrypt.hash(req.body.password_hash, salt, function(err, p_hash) {
-			console.log(p_hash);
-			console.log(req.body.email);
-			console.log(req.body.user_name);
+			
+			connection.query('INSERT INTO users (email, user_name, password_hash) VALUES (?, ?, ?)', [req.body.email, req.body.user_name, p_hash], function (error, results, fields) {
 
-			var query = 'INSERT INTO users (email, user_name, password_hash) VALUES ("'+req.body.email+'", "'+req.body.user_name+'", "'+p_hash+'");'
-
-			connection.query(query, function (error, results, fields) {
-	    	  	console.log('--------');
 		    	var what_user_sees = "";
-		    	if (error){
-		    		console.log(err);
-		    		console.log('--------');
+		    	
+		    	if (error) {
 		    	  	what_user_sees = 'you need to use a unique email';
-		    	}else{
+		    	}else {
 		    	  	what_user_sees = 'you have signed up - please go login at the login route';
 		    	}
 		    	// res.send(what_user_sees);
@@ -92,45 +79,44 @@ app.post('/register', function(req,res) {
 	});
 });
 
-
 app.get('/loginPage', function(req,res) {
 	res.sendFile(path.join(__dirname, "public/login.html"));
 });
 
 app.post('/login', function(req,res) {
-	// console.log(req.body.email);
-	// console.log(req.body.password_hash);
-	// var query = connection.query('SELECT * FROM users',  function(error, response, fields) {
-	// 	console.log(response);
-	// 	connection.end();
-	// 	res.redirect('/');
-	// })
 
-	connection.query('SELECT * FROM users WHERE email = ?', [req.params.email],function (error, results, fields) {
+	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
-	  if (error) throw error;
+		if (error) throw error;
 
-	  // res.json(results);
-	  if (results.length == 0){
-	  	res.send('try again');
-	  }else {
-	  	bcrypt.compare(req.params.password, results[0].password_hash, function(err, result) {
-	  	    
-	  	    if (result == true){
+		// res.json(results);
+		if (results.length == 0) {
+		  	res.send('try again');
+		}else {
+		  	bcrypt.compare(req.body.password_hash, results[0].password_hash, function(err, result) {
+		  	    
+		  	    if (result == true) {
+		  	    	req.session.user_id = results[0].id;
+		  	      	req.session.email = results[0].email;
+		  	      	// req.session.user_name = results[0].email;
+		  	      	createLoggout();
+		  	      	console.log('line 104')
+		  	      	res.send('you are logged in');
 
-	  	      req.session.user_id = results[0].id;
-	  	      req.session.email = results[0].email;
-
-	  	      res.send('you are logged in');
-
-	  	    }else{
-	  	      res.redirect('/');
-	  	    }
-	  	});
-	  }
+		  	    }else {
+		  	      	res.redirect('/');
+		  	    }
+		  	});
+		}
 	});
 })
 
+function createLoggout() {
+	console.log('line 115')
+	app.get('/createLoggout', function() {
+		console.log('line 118');
+	})
+}
 
 
 
@@ -138,3 +124,17 @@ app.post('/login', function(req,res) {
 app.listen(3000, function(){
 	console.log('listening on 3000');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
