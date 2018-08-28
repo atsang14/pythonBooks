@@ -48,11 +48,12 @@
   	</nav>
 
 	<div align="center">
-	  	<form name="searchform" onSubmit="return dosearch();">
+	  	<form action="/search" method="POST" name="searchform" >
 			<br /> <br /><br /><br /><br /><br /><br /><br /><br /><br />
 
 			<input type="text"  placeholder="search here" name="searchterms">
-			<input type="submit" name="SearchSubmit" value="Search">
+			<button>Search</button>
+			<!-- <input type="submit" name="SearchSubmit" value="Search"> -->
 
 			<!-- row to make neater. This row makes the radio buttons 
 				under the search bar-->
