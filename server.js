@@ -52,6 +52,7 @@ app.get('/', function(req, res) {
 app.post('/create', function(req, res){
 	console.log(req.body);
 
+	// -- WE NEED TO USE SESSION HERE -- 
 	// here i manually put in a user name because we have not yet created
 	// any users. We may use this method again when we grab a user information from a 'users' table.
 	req.body.user_name = 'Austin';
@@ -86,7 +87,60 @@ app.get('/postings', function(req, res){
 	res.render('pages/postings');
 });
 
+app.get('/sell', function(req, res){
+	// res.sendFile(path.join(__dirname, "postings.html"));
+	res.render('pages/sell');
+});
 
 app.listen(3000, function(){
 	console.log('listening on 3000');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

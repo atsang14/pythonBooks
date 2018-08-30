@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<% include ../partials/head %>
+</head>
+<body>
+
+ <% include ../partials/header %>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Python Books</h1>
+      <h3>Squeezing the life outta your books</h3>
+      <hr>
+      <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Books</button></a>
+    </div>
+    <div class="row">
+
+      <div class="col-12">
+
+        <div class="card">
+          <div class="card-header">
+            <h3><strong>Add Book</strong></h3>
+          </div>
+          <div class="card-body">
+            <form method="POST" role="form">
+              <div class="form-group">
+                <label for="role">ISBN</label>
+                <input type="text" class="form-control" id="role">
+              </div>
+
+              <div class="form-group">
+                <label for="age">Condition</label>
+
+                <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Very Used</a>
+    <a class="dropdown-item" href="#">Lightly Used</a>
+    <a class="dropdown-item" href="#">I Never Opened It</a>
+  </div>
+</div>
+              </div>
+
+              <div class="form-group">
+                <label for="force-points">Price</label>
+                <input type="text" class="form-control" id="force-points">
+              </div>
+
+            </form>
+            <br>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<% include ../partials/footer %>
+
+
+</body>
+</html>
