@@ -5,7 +5,7 @@ var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
 var router = express.Router();
 
-router.use(express.static("../public"));
+
 
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
@@ -22,9 +22,9 @@ router.use(express.static("../public"));
 	var session = require('express-session');
 
 	//allow sessions
-	app.use(session({ secret: 'app', cookie: { maxAge: 1*1000*60*60*24*365 }}));
+	router.use(session({ secret: 'app', cookie: { maxAge: 1*1000*60*60*24*365 }}));
 
-	app.use(cookieParser());
+	router.use(cookieParser());
 
 // Initializes the connection variable to sync with a MySQL database
 var connection = mysql.createConnection({
@@ -40,6 +40,8 @@ var connection = mysql.createConnection({
 	password: "password",
 	database: "pythonbooks_db"
 });
+
+router.use(express.static("../public"));
 
 // this get request brings the use to the root route. 
 // This request is meant to bring the user to the lgoin page. 
@@ -59,12 +61,12 @@ router.get('/registerPage', function(req,res) {
 
 // this doesn't work right now 
 router.post('/register', function(req,res) {
-
+	console.log('------');
 	bcrypt.genSalt(10, function(err, salt) {
-
-		bcrypt.hash(req.body.password_hash, salt, function(err, p_hash) {
-			
-			connection.query('INSERT INTO users (email, user_name, password_hash) VALUES (?, ?, ?)', [req.body.email, req.body.user_name, p_hash], function (error, results, fields) {
+		// console.log(req.body);
+		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
+			// connsole.log(p_hash)
+			connection.query('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
 
 		    	var what_user_sees = "";
 		    	
@@ -82,11 +84,11 @@ router.post('/register', function(req,res) {
 
 router.get('/loginPage', function(req,res) {
 	// res.sendFile(path.join(__dirname, "../public/login.html"));
-	res.render('login.html');
+	res.render('pages/login.ejs');
 });
 
 router.post('/login', function(req,res) {
-
+	console.log('++++++');
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
 		if (error) throw error;
@@ -95,18 +97,18 @@ router.post('/login', function(req,res) {
 		if (results.length == 0) {
 		  	res.send('try again');
 		}else {
-		  	bcrypt.compare(req.body.password_hash, results[0].password_hash, function(err, result) {
-		  	    
+		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
+		  	    // req.session
 		  	    if (result == true) {
-		  	    	req.session.user_id = results[0].id;
+		  	    	
+		  	    	req.session.id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	// req.session.user_name = results[0].email;
 		  	      	
 		  	      	
 		  	      	res.send('you are logged in');
 
 		  	    }else {
-		  	      	res.redirect('/');
+		  	      	res.render('/');
 		  	    }
 		  	});
 		}

@@ -7,7 +7,7 @@
 </head>
 <body>
 
- <% include ../partials/header %>
+<% include ../partials/header %>
   <div class="container">
     <div class="jumbotron">
       <h1>Python Books</h1>
@@ -24,40 +24,43 @@
             <h3><strong>Add Book</strong></h3>
           </div>
           <div class="card-body">
-            <form method="POST" role="form">
+
+            <!-- hit the create route once form is complete -->
+            <form method="POST" action="/create" role="form">
               <div class="form-group">
-                <label for="role">ISBN</label>
-                <input type="text" class="form-control" id="role">
+                <label for="role" >ISBN</label>
+                <input type="text" class="form-control" name="isbn" id="role">
               </div>
 
               <div class="form-group">
-                <label for="age">Condition</label>
+                  <label for="age">Condition</label>
 
-                <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Very Used</a>
-    <a class="dropdown-item" href="#">Lightly Used</a>
-    <a class="dropdown-item" href="#">I Never Opened It</a>
-  </div>
-</div>
+                  <div class="dropdown">
+<!--                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown button
+                    </button> -->
+<!--                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" name = "book_condition">Used</a>
+                      <a class="dropdown-item" name = "book_condition">Fair</a>
+                      <a class="dropdown-item" name = "book_condition">New</a>
+
+                    </div> -->
+                    <input type="" name="book_condition">
+                  </div>
               </div>
 
               <div class="form-group">
-                <label for="force-points">Price</label>
-                <input type="text" class="form-control" id="force-points">
+                <label>Price</label>
+                <input type="text" class="form-control" name="price">
               </div>
+
+              <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
 
             </form>
             <br>
-            <div class="text-right">
-              <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
-            </div>
+            
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -67,3 +70,16 @@
 
 </body>
 </html>
+
+
+<!-- 
+  <form method="POST" action="/create">
+    <input type="number" name="price" placeholder="Enter Your Price">
+    <input type="number" name="ISBN" placeholder="Enter the ISBN">
+    <button>submit</button>
+  </form> -->
+
+
+
+
+

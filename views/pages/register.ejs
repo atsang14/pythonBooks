@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<% include ../partials/head %>
+</head>
+<body>
+<% include ../partials/header %>
+Hi this is register page
+	
+<form method="POST" action="/register">
+	<input type="text" name="name" placeholder="Enter Name">
+	<input type="text" name="email" placeholder="Enter Your Email">
+	<input type="text" name="username" placeholder="Enter Your Full Name">
+	<input type="password" name="password" placeholder="Enter Your Password">
+	
+	<button>submit</button>
+</form>	
+
+
+<% include ../partials/footer %>
+</body>
+</html>

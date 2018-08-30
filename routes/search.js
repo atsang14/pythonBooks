@@ -5,14 +5,6 @@ var path 	= require("path");
 var mysql   = require('mysql');
 var router = express.Router();
 
-// //you need this to be able to process information sent to a POST route
-// 	var bodyParser = require('body-parser');
-
-// 	// parse application/x-www-form-urlencoded
-// 	app.use(bodyParser.urlencoded({ extended: true }));
-
-// 	// parse application/json
-// 	app.use(bodyParser.json());
 app.set ('view engine', 'ejs')
 
 var path = require("path");
@@ -66,3 +58,9 @@ router.get('/searchResults', function (req, res){
 })
 
 module.exports = router;
+
+
+
+
+
+

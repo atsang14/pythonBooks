@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head %>
+
+</head>
+<body>
+    <% include ../partials/header %>
+    <div id="content"></div>
+
+    <div id="postings">
+        <% searchResults.forEach(function(posting) { %>
+            <div>
+                <span><%= posting.isbn %></span>
+                    <% if((posting.price % 1) == 0){ %>
+                    <span>$<%= posting.price %>.00</span>
+                    <% }else if(((posting.price*10) % 1) == 0){ %>
+                        <span>$<%= posting.price %>0</span>
+                    <% }else{ %>
+                    <span>$<%= posting.price %></span>
+                    <% } %>    
+                <span><%= posting.book_condition %></span>
+                <a href="/postingDetails">Details</a>
+            </div>
+        <% }); %>
+    </div>
+    
+    <% include ../partials/footer %>
+    <script type="text/javascript" src="/assets/javascript/search.js"></script>
+</body>
+</html>

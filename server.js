@@ -38,8 +38,10 @@ var connection = mysql.createConnection({
 
 var userAuthRoutes = require('./routes/userAuth.js');
 var searchRoutes = require('./routes/search.js');
+var sellRoutes = require('./routes/sell.js');
 app.use('/', userAuthRoutes);
 app.use('/', searchRoutes);
+app.use('/', sellRoutes);
 
 // since this is a practice file, i used create.html as the default route.
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
@@ -91,6 +93,15 @@ app.get('/sell', function(req, res){
 	// res.sendFile(path.join(__dirname, "postings.html"));
 	res.render('pages/sell');
 });
+
+// app.get('/loginPage', function(req,res) {
+// 	// res.sendFile(path.join(__dirname, "../public/login.html"));
+// 	res.render('pages/login.ejs');
+// });
+
+// app.get('/registerPage', function(req,res) {
+// 	res.render("pages/register.ejs");
+// })
 
 app.listen(3000, function(){
 	console.log('listening on 3000');
