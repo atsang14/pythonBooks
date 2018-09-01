@@ -5,8 +5,6 @@ var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
 var router = express.Router();
 
-
-
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
 
@@ -74,7 +72,6 @@ router.post('/register', function(req,res) {
 });
 
 router.get('/loginPage', function(req,res) {
-	// res.sendFile(path.join(__dirname, "../public/login.html"));
 	res.render('pages/login.ejs');
 });
 
