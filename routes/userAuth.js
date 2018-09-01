@@ -102,12 +102,10 @@ router.post('/login', function(req,res) {
 		  	    if (result == true) {
 		  	    	console.log(results);
 		  	    	console.log(results[0].id);
-		  	    	console.log(req.session);
 		  	    	
-		  	    	req.session.id = results[0].id;
-		  	    	console.log(req.session.id)
+		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	
+		  	      	console.log(req.session);
 		  	      	res.redirect('/');
 
 		  	    }else {
