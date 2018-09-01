@@ -13,6 +13,7 @@ $.ajax({
 	method: 'GET'
 }).then(function(data){
     var title = data.items[0].volumeInfo.title;
+    // var isbn = data.items[0].volumeInfo.industryIdentifiers[1].identifier;
     var authors = data.items[0].volumeInfo.authors;
     var description = data.items[0].volumeInfo.description;
     var thumbnail = data.items[0].volumeInfo.imageLinks.thumbnail;
@@ -24,12 +25,16 @@ $.ajax({
         $("<div>").html('<p>Title: '+title+'</p>')
     );
     $("#content").append(
+        $("<div>").html('<p>ISBN: '+searchTerm+'</p>')
+    );
+    $("#content").append(
         $("<div>").html('<p>Author(s): '+authors+'</p>')
     );
     $("#content").append(
         $("<div>").html('<p>Description: '+description+'</p>')
     );
-
+    var amazonLink = "https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords="+searchTerm;
+    $("#amazonLink").attr("href",amazonLink);
 	
 
 });

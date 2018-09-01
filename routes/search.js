@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "password",
+  password: "ym",
   database: "pythonbooks_db"
 });
 
@@ -80,8 +80,8 @@ router.post('/search', function(req, res){
 });
 
 router.get('/searchResults', function (req, res){
-	// console.log("within search results, req:")
-	// console.log(req.url);
+	console.log("within search results, req:")
+	console.log(req);
 	//req.url: /searchResults?searchterms=1305270339
 	var queryStr = req.url.split("?")[1];
 	var queryArray = queryStr.split("&");
@@ -98,9 +98,13 @@ router.get('/searchResults', function (req, res){
 			}else{
 				
 			}
-		// console.log("response from searches table:");
-		// console.log(response);
-		res.render("pages/searchResults", {searchResults: response});
+		console.log("response from searches table:");
+		console.log(response);
+			if (req.session.hasOwnProperty("user_id")){
+				res.render("pages/searchResults", {searchResults: response, uid: req.session.user_id});
+			} else {
+				res.render("pages/searchResults", {searchResults: response, uid: null});
+			}
 		}
 	);
 })

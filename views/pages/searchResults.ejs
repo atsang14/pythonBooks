@@ -9,20 +9,29 @@
     <div id="content"></div>
 
     <div id="postings">
-        <% searchResults.forEach(function(posting) { %>
-            <div>
-                <span><%= posting.isbn %></span>
+        <% if (searchResults){ %>
+            <div>Available Postings</div>
+            <% searchResults.forEach(function(posting) { %>
+                <div>
                     <% if((posting.price % 1) == 0){ %>
-                    <span>$<%= posting.price %>.00</span>
+                        <span>$<%= posting.price %>.00 - </span>
                     <% }else if(((posting.price*10) % 1) == 0){ %>
-                        <span>$<%= posting.price %>0</span>
+                        <span>$<%= posting.price %>0 - </span>
                     <% }else{ %>
-                    <span>$<%= posting.price %></span>
+                        <span>$<%= posting.price %> - </span>
                     <% } %>    
-                <span><%= posting.book_condition %></span>
-                <a href="/postingDetails">Details</a>
-            </div>
-        <% }); %>
+                    <span>Book Condition: <%= posting.book_condition %> - </span>
+                    <% if (uid==null){ %>
+                        <a href="/loginPage">Please login to contact seller</a>
+                    <% } else { %>
+                        <a href="/postingDetails/<%= posting.id  %>">Details</a>
+                    <% } %>
+                    
+                </div>
+            <% }); %>
+        <% } %>
+        <a id = "amazonLink" href="" target="_blank">Purchase from Amazon</a>
+        
     </div>
     
     <% include ../partials/footer %>
