@@ -47,13 +47,19 @@ router.post('/create', function(req, res){
 	// here i manually put in a user name because we have not yet created
 	// any users. We may use this method again when we grab a user information from a 'users' table.
 	// req.body.user_name = 'Austin';
-	// if(req.session.id == null){
-	// 	alert('Login First');
-	// }else {
 
-		req.body.user_id = parseInt(req.session.id);
+	if(req.session.id == null) {
+		alert('Login First');
+	}else {
+		console.log(req.session.id)
+		// do a search and add book title
+		// create a logout
+
+		req.body.user_id 	= parseInt(req.session.id);
 		req.body.book_title = 'Book Title Here';
-
+		// console.log(req.body.user_id);
+		// console.log(req.body.book_title);
+		console.log(req.body);
 		// --- THIS LINE WILL RUN INTO AN ERROR BECAUSE THE TABLE NAME MUST BE CHANGED ---
 		// run query to insert into table getInput
 		var query = connection.query(
@@ -63,7 +69,7 @@ router.post('/create', function(req, res){
 			    res.redirect('/');
 		  	}
 		);
-	// }
+	}
 
 });
 

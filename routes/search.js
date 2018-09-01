@@ -5,6 +5,14 @@ var path 	= require("path");
 var mysql   = require('mysql');
 var router = express.Router();
 
+// //you need this to be able to process information sent to a POST route
+// 	var bodyParser = require('body-parser');
+
+// 	// parse application/x-www-form-urlencoded
+// 	app.use(bodyParser.urlencoded({ extended: true }));
+
+// 	// parse application/json
+// 	app.use(bodyParser.json());
 app.set ('view engine', 'ejs')
 
 var path = require("path");
@@ -43,24 +51,58 @@ router.post('/search', function(req, res){
 	// console.log(req._parsedOriginalUrl.search);
 	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
 	var query = connection.query(
-		"INSERT INTO searches SET ?",
-		{ isbn: req.body.searchterms, number_of_search: 0 },
+		"SELECT * FROM searches WHERE ?",
+		{ isbn: req.body.searchterms },
 		function(err, response) {
 			if(err) console.log(err);
-			res.redirect('/searchResults?searchterms='+req.body.searchterms);
-	}
-  );
-	
-})
+			if(response.length ==0){
+				//searched isbn has not been searched before
+				var query = connection.query(
+					"INSERT INTO searches SET ?",
+					{ isbn: req.body.searchterms, number_of_search: 1 },
+					function(err2, response2){
+						if(err2) console.log(err2);
+					}
+				);
+			}else{
+				//searched isbn has been searched before
+				var query = connection.query(
+					"UPDATE searches SET ? WHERE ?",
+					[{ number_of_search: response[0].number_of_search + 1 },
+					{ isbn: req.body.searchterms}]	,
+					function(err2, response2){
+						if(err2) console.log(err2);
+					}
+				);
+			}
+		res.redirect('/searchResults?searchterms='+req.body.searchterms)}
+	);
+});
 
 router.get('/searchResults', function (req, res){
-	res.render("pages/searchResults");
+	console.log("within search results, req:")
+	console.log(req.url);
+	//req.url: /searchResults?searchterms=1305270339
+	var queryStr = req.url.split("?")[1];
+	var queryArray = queryStr.split("&");
+	var searchTerm = queryArray[0].split("=")[1];
+	//searchTerm should be the isbn now
+	var query = connection.query(
+		"SELECT * FROM postings WHERE ?",
+		{ isbn: searchTerm },
+		function(err, response) {
+			if(err) console.log(err);
+			if(response.length ==0){
+				//searched isbn has not been searched before
+				
+			}else{
+				
+			}
+		console.log("response from searches table:");
+		console.log(response);
+		res.render("pages/searchResults", { searchResults: response});
+		}
+	);
 })
 
 module.exports = router;
-
-
-
-
-
-

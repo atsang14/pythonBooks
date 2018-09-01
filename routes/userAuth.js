@@ -66,16 +66,16 @@ router.post('/register', function(req,res) {
 		// console.log(req.body);
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 			// connsole.log(p_hash)
-			connection.query('INSERT INTO users (name, email, username, password) VALUES (?, ?, ?, ?)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
+			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
 
-		    	var what_user_sees = "";
+		    	// var what_user_sees = "";
 		    	
-		    	if (error) {
-		    	  	what_user_sees = 'you need to use a unique email';
-		    	}else {
-		    	  	what_user_sees = 'you have signed up - please go login at the login route';
-		    	}
-		    	// res.send(what_user_sees);
+		    	// if (error) {
+		    	//   	what_user_sees = 'you need to use a unique email';
+		    	// }else {
+		    	//   	what_user_sees = 'you have signed up - please go login at the login route';
+		    	// }
+		    	// // res.send(what_user_sees);
 	    	  	res.redirect('/');
 	    	});
 		});
@@ -88,7 +88,7 @@ router.get('/loginPage', function(req,res) {
 });
 
 router.post('/login', function(req,res) {
-	console.log('++++++');
+	
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
 		if (error) throw error;
@@ -100,15 +100,18 @@ router.post('/login', function(req,res) {
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    // req.session
 		  	    if (result == true) {
+		  	    	console.log(results);
+		  	    	console.log(results[0].id);
+		  	    	console.log(req.session);
 		  	    	
 		  	    	req.session.id = results[0].id;
+		  	    	console.log(req.session.id)
 		  	      	req.session.email = results[0].email;
 		  	      	
-		  	      	
-		  	      	res.send('you are logged in');
+		  	      	res.redirect('/');
 
 		  	    }else {
-		  	      	res.render('/');
+		  	      	res.redirect('/');
 		  	    }
 		  	});
 		}

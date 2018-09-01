@@ -75,7 +75,7 @@ app.post('/create', function(req, res){
 // this is the api where we can grab information and use it in the 
 // ajax requests in post.js file
 app.get('/api', function(req, res){
-	connection.query('SELECT * FROM getInput', function (error, results, fields) {
+	connection.query('SELECT * FROM postings', function (error, results, fields) {
     	if (error) throw error;
     	res.json(results);
   	});
