@@ -45,9 +45,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/search', function(req, res){
-	console.log(req);
-	console.log("-----")
-	console.log(req.body.searchterms)
+	// console.log(req);
+	// console.log("-----")
+	// console.log(req.body.searchterms)
 	// console.log(req._parsedOriginalUrl.search);
 	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
 	var query = connection.query(
@@ -80,8 +80,8 @@ router.post('/search', function(req, res){
 });
 
 router.get('/searchResults', function (req, res){
-	console.log("within search results, req:")
-	console.log(req.url);
+	// console.log("within search results, req:")
+	// console.log(req.url);
 	//req.url: /searchResults?searchterms=1305270339
 	var queryStr = req.url.split("?")[1];
 	var queryArray = queryStr.split("&");
@@ -98,9 +98,9 @@ router.get('/searchResults', function (req, res){
 			}else{
 				
 			}
-		console.log("response from searches table:");
-		console.log(response);
-		res.render("pages/searchResults", { searchResults: response});
+		// console.log("response from searches table:");
+		// console.log(response);
+		res.render("pages/searchResults", {searchResults: response});
 		}
 	);
 })

@@ -67,15 +67,6 @@ router.post('/register', function(req,res) {
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 			// connsole.log(p_hash)
 			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
-
-		    	// var what_user_sees = "";
-		    	
-		    	// if (error) {
-		    	//   	what_user_sees = 'you need to use a unique email';
-		    	// }else {
-		    	//   	what_user_sees = 'you have signed up - please go login at the login route';
-		    	// }
-		    	// // res.send(what_user_sees);
 	    	  	res.redirect('/');
 	    	});
 		});
@@ -93,7 +84,6 @@ router.post('/login', function(req,res) {
 
 		if (error) throw error;
 
-		// res.json(results);
 		if (results.length == 0) {
 		  	res.send('try again');
 		}else {
@@ -105,7 +95,7 @@ router.post('/login', function(req,res) {
 		  	    	
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	console.log(req.session);
+		  	      	// console.log(req.session);
 		  	      	res.redirect('/');
 
 		  	    }else {
@@ -119,3 +109,11 @@ router.post('/login', function(req,res) {
 
 
 module.exports = router;
+
+
+
+
+
+
+
+

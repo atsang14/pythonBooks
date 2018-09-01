@@ -40,46 +40,55 @@ var connection = mysql.createConnection({
   database: "pythonbooks_db"
 });
 
+// When the user submits the form for selling something, we hit the /create route
+// This route inserts the what the user put into the postings table
 router.post('/create', function(req, res){
-	console.log(req.body);
-
-	// -- WE NEED TO USE SESSION HERE -- 
-	// here i manually put in a user name because we have not yet created
-	// any users. We may use this method again when we grab a user information from a 'users' table.
-	// req.body.user_name = 'Austin';
 
 	if(req.session.id == null) {
 		alert('Login First');
 	}else {
-		console.log(req.session.id)
-		// do a search and add book title
-		// create a logout
-
-		req.body.user_id 	= parseInt(req.session.id);
+		// console.log(req.session.id)
+		req.body.user_id 	= parseInt(req.session.user_id);
 		req.body.book_title = 'Book Title Here';
-		// console.log(req.body.user_id);
-		// console.log(req.body.book_title);
-		console.log(req.body);
-		// --- THIS LINE WILL RUN INTO AN ERROR BECAUSE THE TABLE NAME MUST BE CHANGED ---
-		// run query to insert into table getInput
+
+		var postings = "user_id, book_title, price, book_condition, isbn, time_stamp";
+		var values = req.body.user_id+", '"+req.body.book_title+"', '"+req.body.price+"', '"+req.body.book_condition+"', '"+req.body.isbn+"', NOW()";
+	
 		var query = connection.query(
-		  	"INSERT INTO postings(user_id, price, book_title, book_condition, isbn) VALUES ("+req.body.user_id+", "+req.body.price+", "+req.body.book_title+", "+req.body.book_condition+", "+req.body.isbn+")",
+		  	"INSERT INTO postings("+postings+") VALUES ("+values+")",
 		  	function(err, response) {
 			  	if(err) console.log(err);
 			    res.redirect('/');
 		  	}
 		);
 	}
-
 });
-
-// INSERT INTO postings (user_id, price, book_title, book_condition, isbn) VALUES (1, 2, '3', '4', '13245');
-
-
-
-
-
 
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
