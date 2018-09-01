@@ -94,14 +94,6 @@ app.get('/sell', function(req, res){
 	res.render('pages/sell');
 });
 
-// app.get('/loginPage', function(req,res) {
-// 	// res.sendFile(path.join(__dirname, "../public/login.html"));
-// 	res.render('pages/login.ejs');
-// });
-
-// app.get('/registerPage', function(req,res) {
-// 	res.render("pages/register.ejs");
-// })
 
 app.listen(3000, function(){
 	console.log('listening on 3000');

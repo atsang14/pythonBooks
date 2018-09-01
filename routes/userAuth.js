@@ -90,12 +90,9 @@ router.post('/login', function(req,res) {
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    // req.session
 		  	    if (result == true) {
-		  	    	console.log(results);
-		  	    	console.log(results[0].id);
-		  	    	
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	// console.log(req.session);
+		  	      	
 		  	      	res.redirect('/');
 
 		  	    }else {

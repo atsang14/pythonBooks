@@ -51,18 +51,47 @@ router.post('/create', function(req, res){
 		req.body.user_id 	= parseInt(req.session.user_id);
 		req.body.book_title = 'Book Title Here';
 
-		var postings = "user_id, book_title, price, book_condition, isbn, time_stamp";
-		var values = req.body.user_id+", '"+req.body.book_title+"', '"+req.body.price+"', '"+req.body.book_condition+"', '"+req.body.isbn+"', NOW()";
+		databaseCheck(req, res);
+
+		// var postings = "user_id, book_title, price, book_condition, isbn, time_stamp";
+		// var values = req.body.user_id+", '"+req.body.book_title+"', '"+req.body.price+"', '"+req.body.book_condition+"', '"+req.body.isbn+"', NOW()";
 	
-		var query = connection.query(
-		  	"INSERT INTO postings("+postings+") VALUES ("+values+")",
-		  	function(err, response) {
-			  	if(err) console.log(err);
-			    res.redirect('/');
-		  	}
-		);
+		// var query = connection.query(
+		//   	"INSERT INTO postings("+postings+") VALUES ("+values+")",
+		//   	function(err, response) {
+		// 	  	if(err) console.log(err);
+		// 	    res.redirect('/');
+		//   	}
+		// );
 	}
 });
+
+function databaseCheck(request, originalRes) {
+	connection.query("SELECT book_title FROM postings WHERE isbn = '"+request.body.isbn+"'", function(err, res) {
+		if(err) console.log(err);
+		else {
+			if(res[0].book_title == 0) {
+				// do search here
+			} else {
+				insertIntoDb(request, originalRes, res)
+			}
+		}
+	})
+}
+
+function insertIntoDb(request, originalRes, res) {
+	var postings = "user_id, book_title, price, book_condition, isbn, time_stamp";
+	var values = request.body.user_id+", '"+res[0].book_title+"', '"+request.body.price+"', '"+request.body.book_condition+"', '"+request.body.isbn+"', NOW()";
+
+	var query = connection.query(
+	  	"INSERT INTO postings("+postings+") VALUES ("+values+")",
+	  	function(err, response) {
+		  	if(err) console.log(err);
+		    originalRes.redirect('/');
+	  	}
+	);
+}
+
 
 
 

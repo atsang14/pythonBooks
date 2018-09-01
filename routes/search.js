@@ -40,7 +40,7 @@ var connection = mysql.createConnection({
 // since this is a practice file, i used create.html as the default route.
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 router.get('/', function(req, res) {
-	// res.sendFile(path.join(__dirname, "public/create.html"));
+	
 	res.render("pages/home");
 });
 
@@ -55,7 +55,7 @@ router.post('/search', function(req, res){
 		{ isbn: req.body.searchterms },
 		function(err, response) {
 			if(err) console.log(err);
-			if(response.length ==0){
+			if(response.length == 0) {
 				//searched isbn has not been searched before
 				var query = connection.query(
 					"INSERT INTO searches SET ?",
@@ -75,7 +75,9 @@ router.post('/search', function(req, res){
 					}
 				);
 			}
-		res.redirect('/searchResults?searchterms='+req.body.searchterms)}
+			
+			res.redirect('/searchResults?searchterms='+req.body.searchterms);
+		}
 	);
 });
 

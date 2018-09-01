@@ -27,7 +27,7 @@ CREATE TABLE postings(
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   book_title VARCHAR(255) NOT NULL,
-  price FLOAT (11,2) NOT NULL,
+  price FLOAT (11,2) NOT NULL, -- I changed DECIMAL to FLOAT
   book_condition VARCHAR(255) NOT NULL,
   isbn VARCHAR(14) NOT NULL,
   time_stamp DATETIME,
