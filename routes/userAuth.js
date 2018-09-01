@@ -5,8 +5,6 @@ var path 	= require("path");
 var bcrypt 	= require('bcryptjs');
 var router = express.Router();
 
-
-
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
 
@@ -74,7 +72,6 @@ router.post('/register', function(req,res) {
 });
 
 router.get('/loginPage', function(req,res) {
-	// res.sendFile(path.join(__dirname, "../public/login.html"));
 	res.render('pages/login.ejs');
 });
 
@@ -90,12 +87,9 @@ router.post('/login', function(req,res) {
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    // req.session
 		  	    if (result == true) {
-		  	    	console.log(results);
-		  	    	console.log(results[0].id);
-		  	    	
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	// console.log(req.session);
+		  	      	
 		  	      	res.redirect('/');
 
 		  	    }else {
@@ -104,6 +98,12 @@ router.post('/login', function(req,res) {
 		  	});
 		}
 	});
+})
+
+router.get('/logout', function(req,res) {
+	req.session.destroy(function(err){
+		res.send('you are logged out');
+	})
 })
 
 
