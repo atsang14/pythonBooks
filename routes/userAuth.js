@@ -100,6 +100,12 @@ router.post('/login', function(req,res) {
 	});
 })
 
+router.get('/logout', function(req,res) {
+	req.session.destroy(function(err){
+		res.send('you are logged out');
+	})
+})
+
 
 
 module.exports = router;
