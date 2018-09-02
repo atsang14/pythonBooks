@@ -76,14 +76,13 @@ app.get('/postings', function(req, res){
 	res.render('pages/postings');
 });
 
+// if user is logged in, it will redirect them the the actuall sell page
+// if the user is not logged in, then it will send them to
+// the login page.
 app.get('/sell', function(req, res){
-	var loggedIn;
-	if(req.session.user_id) loggedIn = true;
-
-
-	res.render('pages/sell');
+	if(!req.session.user_id) res.render('pages/loginBeforeSell');
+	else res.render('pages/sell');
 });
-
 
 app.listen(3000, function(){
 	console.log('listening on 3000');
