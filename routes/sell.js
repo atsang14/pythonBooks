@@ -45,8 +45,10 @@ var connection = mysql.createConnection({
 // This route inserts the what the user put into the postings table
 router.post('/create', function(req, res){
 
-	console.log(req.session.user_id);
+	// If the user is not logged in
 	if(req.session.user_id == null) {
+
+		// login prompt can go here
 		console.log('Login First');
 	}else {
 		isbnQuery(req, res);
@@ -57,6 +59,8 @@ router.post('/create', function(req, res){
 // then calls another function to run a check
 function isbnQuery(request, originalRes) {
 
+	// query to check if isbn is already in the database. We use this to grab the book title
+	// if the isbn is already in the database
 	var query = "SELECT book_title FROM postings WHERE isbn = '"+request.body.isbn+"'"
 	
 	connection.query(query, function(err, res) {

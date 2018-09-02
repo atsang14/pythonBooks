@@ -57,13 +57,11 @@ router.get('/registerPage', function(req,res) {
 	res.render("pages/register");
 })
 
-// this doesn't work right now 
 router.post('/register', function(req,res) {
-	console.log('------');
 	bcrypt.genSalt(10, function(err, salt) {
-		// console.log(req.body);
+		
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
-			// connsole.log(p_hash)
+			
 			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
 	    	  	res.redirect('/');
 	    	});
@@ -85,7 +83,6 @@ router.post('/login', function(req,res) {
 		  	res.send('try again');
 		}else {
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
-		  	    // req.session
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;

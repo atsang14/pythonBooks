@@ -3,6 +3,17 @@ var express = require('express');
 var app 	= express();
 var path 	= require("path");
 var mysql   = require('mysql');
+var router = express.Router();
+
+//session stuff
+	var cookieParser = require('cookie-parser');
+
+	var session = require('express-session');
+
+	//allow sessions
+	router.use(session({ secret: 'app', cookie: { maxAge: 1*1000*60*60*24*365 }}));
+
+	router.use(cookieParser());
 
 app.set('view engine','ejs');
 //you need this to be able to process information sent to a POST route
@@ -46,30 +57,7 @@ app.use('/', sellRoutes);
 // since this is a practice file, i used create.html as the default route.
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 app.get('/', function(req, res) {
-	// res.sendFile(path.join(__dirname, "public/create.html"));
 	res.render("pages/home");
-});
-
-// Here.. /create is basically SELL. Look at create.html and that routes to this request
-app.post('/create', function(req, res){
-	console.log(req.body);
-
-	// -- WE NEED TO USE SESSION HERE -- 
-	// here i manually put in a user name because we have not yet created
-	// any users. We may use this method again when we grab a user information from a 'users' table.
-	req.body.user_name = 'Austin';
-
-
-	// --- THIS LINE WILL RUN INTO AN ERROR BECAUSE THE TABLE NAME MUST BE CHANGED ---
-	// run query to insert into table getInput
-	var query = connection.query(
-	  	"INSERT INTO getInput SET ?",
-	  	req.body,
-	  	function(err, response) {
-		  	if(err) console.log(err);
-		    res.redirect('/');
-	  	}
-	);
 });
 
 // this is the api where we can grab information and use it in the 
@@ -85,12 +73,14 @@ app.get('/api', function(req, res){
 // Then, in the postings.html file we specifiy we are using
 // the post.js javascript file and request the api from our database.
 app.get('/postings', function(req, res){
-	// res.sendFile(path.join(__dirname, "postings.html"));
 	res.render('pages/postings');
 });
 
 app.get('/sell', function(req, res){
-	// res.sendFile(path.join(__dirname, "postings.html"));
+	var loggedIn;
+	if(req.session.user_id) loggedIn = true;
+
+
 	res.render('pages/sell');
 });
 
