@@ -111,4 +111,20 @@ router.get('/searchResults', function (req, res){
 	);
 })
 
+router.get('/postingDetails/:id', function(req, res){
+	console.log("within posting details, req:")
+	console.log(req);
+	var postId = req.params.id;
+	var query = connection.query(
+		"SELECT	postings.id AS post_id, user_id, book_title, price, book_condition, isbn, time_stamp, name, email, username, rating_value, rating_number FROM postings LEFT JOIN users ON postings.user_id = users.id WHERE postings.id="+postId,
+		function(err, response) {
+			if(err) console.log(err);
+			console.log("response from searches table:");
+			console.log(response);
+			res.render("pages/postingDetails", {postingDetails: response});
+		}
+	)
+})
+
+
 module.exports = router;

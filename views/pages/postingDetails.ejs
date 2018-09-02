@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/head %>
+
+</head>
+<body>
+    <% include ../partials/header %>
+    <div id="content"></div>
+    <!-- res.render("pages/postingDetails", {postingDetails: response}); -->
+    <div id="details">
+        <div>Seller: <%= postingDetails[0].username %></div>
+        <div>Seller email: <%= postingDetails[0].email %></div>
+        <div>Selling price: 
+            <% if((postingDetails[0].price % 1) == 0){ %>
+                <span>$<%= postingDetails[0].price %>.00</span>
+            <% }else if(((postingDetails[0].price*10) % 1) == 0){ %>
+                <span>$<%= postingDetails[0].price %>0</span>
+            <% }else{ %>
+                <span>$<%= postingDetails[0].price %></span>
+            <% } %>
+        </div>
+        <div id="isbn" isbn="<%= postingDetails[0].isbn %>">ISBN: <%= postingDetails[0].isbn %></div>
+        <div id="ajaxData"></div>
+    </div>
+    
+    <% include ../partials/footer %>
+    <script type="text/javascript" src="/assets/javascript/postingDetails.js"></script>
+</body>
+</html>
