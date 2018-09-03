@@ -52,7 +52,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/loginPage', function(req,res) {
-	res.render("pages/login");
+	res.render("pages/login", {req: req.session.user_id});
 });
 
 router.get('/registerPage', function(req,res) {
@@ -101,7 +101,7 @@ router.post('/login', function(req,res) {
 
 router.get('/logout', function(req,res) {
 	req.session.destroy(function(err) {
-		res.send('you are logged out');
+		res.render('pages/logout.ejs', {req: null});
 	})
 })
 

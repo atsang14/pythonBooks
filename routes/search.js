@@ -41,7 +41,7 @@ var connection = mysql.createConnection({
 // path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 router.get('/', function(req, res) {
 	
-	res.render("pages/home");
+	res.render("pages/home", {req: req.session.user_id});
 });
 
 router.post('/search', function(req, res){
