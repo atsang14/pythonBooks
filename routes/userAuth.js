@@ -1,9 +1,11 @@
-var mysql 	= require("mysql");
-var express = require('express');
-var app 	= express();
-var path 	= require("path");
-var bcrypt 	= require('bcryptjs');
-var router = express.Router();
+var mysql 		= require("mysql");
+var express 	= require('express');
+var app 		= express();
+var path 		= require("path");
+var bcrypt 		= require('bcryptjs');
+var router  	= express.Router();
+var href	 	= '';
+var text		= '';
 
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
@@ -45,8 +47,8 @@ router.use(express.static("../public"));
 // This request is meant to bring the user to the lgoin page. 
 // We will change the route when we want to integrate to login page.
 // We will also change the file path as well to the correct login prompt
-router.get('/', function(req, res){
-	res.render("pages/home");
+router.get('/', function(req, res) {
+	res.render("pages/home", {req: req.session.user_id});
 });
 
 router.get('/loginPage', function(req,res) {
@@ -86,7 +88,7 @@ router.post('/login', function(req,res) {
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
-		  	      	
+
 		  	      	res.redirect('/');
 
 		  	    }else {
@@ -98,11 +100,10 @@ router.post('/login', function(req,res) {
 })
 
 router.get('/logout', function(req,res) {
-	req.session.destroy(function(err){
+	req.session.destroy(function(err) {
 		res.send('you are logged out');
 	})
 })
-
 
 
 module.exports = router;

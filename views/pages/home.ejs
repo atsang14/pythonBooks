@@ -6,9 +6,26 @@
 	<% include ../partials/head %>
 </head>
 <body>
+<!-- 	                <li class=""><a href="/loginPage">Login</a></li>
+                
+                <li class=""><a href="/registerPage">Register</a></li> -->
 
 <div class="container example-7">
   	<% include ../partials/header %>
+  	            <ul class="nav navbar-nav navbar-right">
+            		<% if(req != null) { %>
+            			<li class=""><a href="/logout">Logout</a></li>
+            		<% } else if(req == null) { %>
+            			<li class=""><a href="/loginPage">Login</a></li>
+            			<li class=""><a href="/registerPage">Register</a></li>
+            		<% } %>
+            </ul>
+        </div>
+  <!--/.nav-collapse -->
+    </div>
+<!--/.container-fluid -->
+  </nav>
+
 	<div id = "searchDiv" align="center">
 	  	<form action="/search" method="POST" name="searchform" >
 			<br /> <br /><br /><br /><br /><br /><br /><br /><br /><br />

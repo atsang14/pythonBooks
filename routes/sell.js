@@ -55,7 +55,7 @@ router.post('/create', function(req, res){
 
 	// If the user is not logged in
 	if(req.session.user_id == null) {
-
+		
 		// login prompt can go here
 		console.log('Login First');
 	}else {
