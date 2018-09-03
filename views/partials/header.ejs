@@ -12,9 +12,22 @@
 
         <div id="navbar7" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/sell">Sell</a></li>
-                <li><a href="">Support</a></li>
-                <li><a href="">About</a></li>
+                <li id="navHome" class="nav-item"><a href="/">Home</a></li>
+                <li id="navSell" class="nav-item"><a href="/sell">Sell</a></li>
+                <!-- <li id="navSupport" class="nav-item"><a href="">Support</a></li>
+                <li id="navAbout" class="nav-item"><a href="">About</a></li> -->
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <!-- req will be passed via res.render for every page in order for this part of the navbar to work -->
+                <% if(req != null) { %>
+                    <li id="navLogStatus" class="nav-item"><a href="/logout">Logout</a></li>
+                <% } else if(req == null) { %>
+                    <li id="navLogStatus" class="nav-item"><a href="/loginPage">Login</a></li>
+                    <li id="navRegister" class="nav-item"><a href="/registerPage">Register</a></li>
+                <% } %>
+            </ul>
+        </div>
+  <!--/.nav-collapse -->
+    </div>
+<!--/.container-fluid -->
+  </nav>

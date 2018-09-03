@@ -6,19 +6,7 @@
 </head>
 <body>
     <% include ../partials/header %>
-                    <ul class="nav navbar-nav navbar-right">
-                    <% if(uid != null) { %>
-                        <li class=""><a href="/logout">Logout</a></li>
-                    <% } else if(uid == null) { %>
-                        <li class=""><a href="/loginPage">Login</a></li>
-                        <li class=""><a href="/registerPage">Register</a></li>
-                    <% } %>
-            </ul>
-        </div>
-  <!--/.nav-collapse -->
-    </div>
-<!--/.container-fluid -->
-  </nav>
+                    
 
     <div id="content"></div>
 
@@ -35,7 +23,7 @@
                         <span>$<%= posting.price %> - </span>
                     <% } %>    
                     <span>Book Condition: <%= posting.book_condition %> - </span>
-                    <% if (uid==null){ %>
+                    <% if (req==null){ %>
                         <a href="/loginPage">Please login to contact seller</a>
                     <% } else { %>
                         <a href="/postingDetails/<%= posting.id  %>">Details</a>

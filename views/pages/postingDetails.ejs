@@ -8,7 +8,7 @@
     <% include ../partials/header %>
 
     <div id="content"></div>
-    <!-- res.render("pages/postingDetails", {postingDetails: response}); -->
+    
     <div id="details">
         <div>Seller: <%= postingDetails[0].username %></div>
         <div>Seller email: <%= postingDetails[0].email %></div>
@@ -22,6 +22,7 @@
             <% } %>
         </div>
         <div id="isbn" isbn="<%= postingDetails[0].isbn %>">ISBN: <%= postingDetails[0].isbn %></div>
+        <!-- postingDetails.js will use the value of isbn above in order to populate into ajaxData -->
         <div id="ajaxData"></div>
     </div>
     
