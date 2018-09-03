@@ -54,8 +54,6 @@ app.use('/', userAuthRoutes);
 app.use('/', searchRoutes);
 app.use('/', sellRoutes);
 
-// since this is a practice file, i used create.html as the default route.
-// path.join just joins the absolute path to this directory with the relative path that you input as the 2nd argument of .join()
 app.get('/', function(req, res) {
 	res.render("pages/home");
 });
@@ -74,14 +72,6 @@ app.get('/api', function(req, res){
 // the post.js javascript file and request the api from our database.
 app.get('/postings', function(req, res){
 	res.render('pages/postings');
-});
-
-// if user is logged in, it will redirect them the the actuall sell page
-// if the user is not logged in, then it will send them to
-// the login page.
-app.get('/sell', function(req, res){
-	if(!req.session.user_id) res.render('pages/loginBeforeSell');
-	else res.render('pages/sell');
 });
 
 app.listen(3000, function(){

@@ -41,6 +41,14 @@ var connection = mysql.createConnection({
   database: "pythonbooks_db"
 });
 
+// if user is logged in, it will redirect them the the actuall sell page
+// if the user is not logged in, then it will send them to
+// the login page.
+router.get('/sell', function(req, res){
+	if(!req.session.user_id) res.render('pages/loginBeforeSell');
+	else res.render('pages/sell');
+});
+
 // When the user submits the form for selling something, we hit the /create route
 // This route inserts the what the user put into the postings table
 router.post('/create', function(req, res){
