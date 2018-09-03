@@ -56,7 +56,7 @@ router.get('/loginPage', function(req,res) {
 });
 
 router.get('/registerPage', function(req,res) {
-	res.render("pages/register");
+	res.render("pages/register", {req: req.session.user_id});
 })
 
 router.post('/register', function(req,res) {

@@ -103,9 +103,9 @@ router.get('/searchResults', function (req, res){
 		console.log("response from searches table:");
 		console.log(response);
 			if (req.session.hasOwnProperty("user_id")){
-				res.render("pages/searchResults", {searchResults: response, uid: req.session.user_id});
+				res.render("pages/searchResults", {searchResults: response, req: req.session.user_id});
 			} else {
-				res.render("pages/searchResults", {searchResults: response, uid: null});
+				res.render("pages/searchResults", {searchResults: response, req: null});
 			}
 		}
 	);
@@ -116,12 +116,13 @@ router.get('/postingDetails/:id', function(req, res){
 	console.log(req);
 	var postId = req.params.id;
 	var query = connection.query(
+		//when joining the postings and the users table, and both tables have id column, have to alias one column and not select the other column in order to produce a response that's not confusing
 		"SELECT	postings.id AS post_id, user_id, book_title, price, book_condition, isbn, time_stamp, name, email, username, rating_value, rating_number FROM postings LEFT JOIN users ON postings.user_id = users.id WHERE postings.id="+postId,
 		function(err, response) {
 			if(err) console.log(err);
 			console.log("response from searches table:");
 			console.log(response);
-			res.render("pages/postingDetails", {postingDetails: response});
+			res.render("pages/postingDetails", {postingDetails: response, req: req.session.user_id});
 		}
 	)
 })
