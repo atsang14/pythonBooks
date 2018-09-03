@@ -8,16 +8,21 @@
 <body>
 
 <% include ../partials/header %>
-            <ul class="nav navbar-nav navbar-right">
-                <li class=""><a href="/loginPage">Login</a></li>
-                <li class=""><a href="/logout">Logout</a></li>
-                <li class=""><a href="/registerPage">Register</a></li>
+                  <ul class="nav navbar-nav navbar-right">
+                <% if(req != null) { %>
+                  <li class=""><a href="/logout">Logout</a></li>
+                <% } else if(req == null) { %>
+                  <li class=""><a href="/loginPage">Login</a></li>
+                  <li class=""><a href="/registerPage">Register</a></li>
+                <% } %>
             </ul>
         </div>
   <!--/.nav-collapse -->
     </div>
 <!--/.container-fluid -->
   </nav>
+
+<% if (req != null ) { %>
   <div class="container">
     <div class="jumbotron">
       <h1>Python Books</h1>
@@ -46,6 +51,7 @@
                   <label for="age">Condition</label>
 
                   <div class="dropdown">
+
 <!--                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Dropdown button
                     </button> -->
@@ -74,6 +80,27 @@
       </div>
     </div>
   </div>
+
+<% } else { %>
+  <h1>You must login before you can Sell</h1>
+  <form method="POST" action="/login">
+    <input type="text" name="email" placeholder="Enter Your Email">
+    <input type="password" name="password" placeholder="Enter Your Password">
+    
+    <button>submit</button>
+  </form> 
+
+  <h1>Don't have an account with us? Register here!</h1>
+
+  <form method="POST" action="/register">
+    <input type="text" name="name" placeholder="Enter Name">
+    <input type="text" name="email" placeholder="Enter Your Email">
+    <input type="text" name="username" placeholder="Enter Your Full Name">
+    <input type="password" name="password" placeholder="Enter Your Password">
+    
+    <button>submit</button>
+  </form> 
+<% } %>
 
 <% include ../partials/footer %>
 

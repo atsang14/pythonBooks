@@ -45,8 +45,7 @@ var connection = mysql.createConnection({
 // if the user is not logged in, then it will send them to
 // the login page.
 router.get('/sell', function(req, res){
-	if(!req.session.user_id) res.render('pages/loginBeforeSell');
-	else res.render('pages/sell');
+	res.render('pages/sell', {req: req.session.user_id});
 });
 
 // When the user submits the form for selling something, we hit the /create route
