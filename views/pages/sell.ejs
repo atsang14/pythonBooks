@@ -14,7 +14,7 @@
   <div class="container">
     <div class="jumbotron">
       <h1>Python Books</h1>
-      <h3>Squeezing the life outta your books</h3>
+      <h3>Squeezing the life out of books</h3>
       <hr>
       <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Books</button></a>
     </div>
@@ -39,15 +39,16 @@
               <div class="form-group">
                   <label for="age">Condition</label>
 									<br>
-										<input type="radio" name="condition" value="Very Used" checked> Very Used<br>
-									   <input type="radio" name="condition" value="Lightly Used"> Lightly Used<br>
-									   <input type="radio" name="condition" value="Like New"> Like New
+										<input type="radio" name="book_condition" value="Very Used"> Very Used<br>
+									   <input type="radio" name="book_condition" value="Lightly Used"> Lightly Used<br>
+									   <input type="radio" name="book_condition" value="Like New"> Like New
                   </div>
               </div>
 
               <div class="form-group">
                 <label>Price</label>
-                <input type="number" class="form-control" name="price" required>
+                <input type="number" class="form-control" name="price" required
+								placeholder="input whole dollar price">
               </div>
 
               <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
@@ -62,18 +63,20 @@
   </div>
 
 	<script>
+
+	//function to validate the form's ISBN number input and ensure it's between 10-14 digits. 
 function formValidation()
 {
     var isbn = document.forms["sellForm"]["isbn"];
 
-    if (isbn.value == "")
-    {
-        window.alert("Please enter the book's isbn.");
-        isbn.focus();
-        return false;
-    }
+    // if (isbn.value == "")
+    // {
+    //     window.alert("Please enter the book's isbn.");
+    //     isbn.focus();
+    //     return false;
+    // }
 
-		if(isbn.length >= 10 && isbn.length <= 14){
+		if (isbn.length >= 10 && isbn.length <= 14){
 		 return true;
 	 }else{
 		 alert("Please input a 10-12 digit ISBN number");
