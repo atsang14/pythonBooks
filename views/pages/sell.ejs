@@ -29,33 +29,25 @@
           <div class="card-body">
 
             <!-- hit the create route once form is complete -->
-            <form method="POST" action="/create" role="form">
+            <form name="sellForm" method="POST" action="/create" role="form" onsubmit="formValidation()">
               <div class="form-group">
                 <label for="role" >ISBN</label>
-                <input type="number" class="form-control" name="isbn" id="role" maxlength="14">
+                <input type="number" size=14 class="form-control" name="isbn" id="role"  required
+               placeholder="input the 10-14 digit ISBN number"/>
               </div>
 
               <div class="form-group">
                   <label for="age">Condition</label>
-
-                  <div class="dropdown">
-
-<!--                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown button
-                    </button> -->
-<!--                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" name = "book_condition">Used</a>
-                      <a class="dropdown-item" name = "book_condition">Fair</a>
-                      <a class="dropdown-item" name = "book_condition">New</a>
-
-                    </div> -->
-                    <input type="" name="book_condition">
+									<br>
+										<input type="radio" name="condition" value="Very Used" checked> Very Used<br>
+									   <input type="radio" name="condition" value="Lightly Used"> Lightly Used<br>
+									   <input type="radio" name="condition" value="Like New"> Like New
                   </div>
               </div>
 
               <div class="form-group">
                 <label>Price</label>
-                <input type="number" class="form-control" name="price">
+                <input type="number" class="form-control" name="price" required>
               </div>
 
               <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
@@ -68,6 +60,29 @@
       </div>
     </div>
   </div>
+
+	<script>
+function formValidation()
+{
+    var isbn = document.forms["sellForm"]["isbn"];
+
+    if (isbn.value == "")
+    {
+        window.alert("Please enter the book's isbn.");
+        isbn.focus();
+        return false;
+    }
+
+		if(isbn.length >= 10 && isbn.length <= 14){
+		 return true;
+	 }else{
+		 alert("Please input a 10-12 digit ISBN number");
+		 isbn.focus();
+		 return false;
+	 }
+}
+</script>
+
 
 <% } else { %>
   <h1>You must login before you can Sell</h1>
@@ -95,11 +110,3 @@
 
 </body>
 </html>
-
-
-<!--
-  <form method="POST" action="/create">
-    <input type="number" name="price" placeholder="Enter Your Price">
-    <input type="number" name="ISBN" placeholder="Enter the ISBN">
-    <button>submit</button>
-  </form> -->
