@@ -24,7 +24,7 @@
                     <% } %>    
                     <span>Book Condition: <%= posting.book_condition %> - </span>
                     <% if (req==null){ %>
-                        <a href="/loginPage">Please login to contact seller</a>
+                        <a href="/loginPage<%= nextRoute %>/ <%= searchTerm %>">Please login to contact seller</a>
                     <% } else { %>
                         <a href="/postingDetails/<%= posting.id  %>">Details</a>
                     <% } %>

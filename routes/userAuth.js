@@ -55,6 +55,11 @@ router.get('/loginPage', function(req,res) {
 	res.render("pages/login", {req: req.session.user_id});
 });
 
+router.get('/loginPage/:nextRoute/:isbn', function(req,res) {
+	
+	res.render("pages/login", {req: req.session.user_id, nextRoute: req.params.nextRoute, isbn: req.params.isbn});
+});
+
 router.get('/registerPage', function(req,res) {
 	res.render("pages/register", {req: req.session.user_id});
 })
@@ -69,10 +74,6 @@ router.post('/register', function(req,res) {
 	    	});
 		});
 	});
-});
-
-router.get('/loginPage', function(req,res) {
-	res.render('pages/login.ejs');
 });
 
 router.post('/login', function(req,res) {
@@ -90,6 +91,34 @@ router.post('/login', function(req,res) {
 		  	      	req.session.email = results[0].email;
 
 		  	      	res.redirect('/');
+
+		  	    }else {
+		  	      	res.redirect('/');
+		  	    }
+		  	});
+		}
+	});
+})
+
+router.post('/login/:route/:isbn', function(req,res) {
+
+	// had to do a join because for some reason there's a spacing in the isbn variable
+	var url = req.params.route+'?'+req.params.isbn;
+	var finalUrl = url.split(' ').join('')
+
+	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
+
+		if (error) throw error;
+
+		if (results.length == 0) {
+		  	res.send('try again');
+		}else {
+		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
+		  	    if (result == true) {
+		  	    	req.session.user_id = results[0].id;
+		  	      	req.session.email = results[0].email;
+
+		  	      	res.redirect('/'+finalUrl);
 
 		  	    }else {
 		  	      	res.redirect('/');

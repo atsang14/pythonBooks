@@ -50,6 +50,8 @@ router.post('/search', function(req, res){
 	// console.log(req.body.searchterms)
 	// console.log(req._parsedOriginalUrl.search);
 	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
+
+	// search tearm is the isbn
 	var query = connection.query(
 		"SELECT * FROM searches WHERE ?",
 		{ isbn: req.body.searchterms },
@@ -75,20 +77,26 @@ router.post('/search', function(req, res){
 					}
 				);
 			}
-			
+			// console.log('you are on line 78');
+			// route: nextRoute
 			res.redirect('/searchResults?searchterms='+req.body.searchterms);
 		}
 	);
 });
 
 router.get('/searchResults', function (req, res){
-	console.log("within search results, req:")
-	console.log(req);
+	// console.log("within search results, req:")
+	// console.log(req);
 	//req.url: /searchResults?searchterms=1305270339
+	// console.log(req.url);
 	var queryStr = req.url.split("?")[1];
 	var queryArray = queryStr.split("&");
 	var searchTerm = queryArray[0].split("=")[1];
-	//searchTerm should be the isbn now
+
+	// variable route and isbn are used to redirect back to the page if login was successful
+	var route = '/searchResults';
+	var isbn = queryStr;
+
 	var query = connection.query(
 		"SELECT * FROM postings WHERE ?",
 		{ isbn: searchTerm },
@@ -100,28 +108,30 @@ router.get('/searchResults', function (req, res){
 			}else{
 				
 			}
-		console.log("response from searches table:");
-		console.log(response);
-			if (req.session.hasOwnProperty("user_id")){
+		// console.log("response from searches table:");
+		// console.log(response);
+			
+			// if user is logged in, else
+			if (req.session.hasOwnProperty("user_id")){		
 				res.render("pages/searchResults", {searchResults: response, req: req.session.user_id});
 			} else {
-				res.render("pages/searchResults", {searchResults: response, req: null});
+				res.render("pages/searchResults", {searchResults: response, req: null, nextRoute: route, searchTerm: isbn});
 			}
 		}
 	);
 })
 
 router.get('/postingDetails/:id', function(req, res){
-	console.log("within posting details, req:")
-	console.log(req);
+	// console.log("within posting details, req:")
+	// console.log(req);
 	var postId = req.params.id;
 	var query = connection.query(
 		//when joining the postings and the users table, and both tables have id column, have to alias one column and not select the other column in order to produce a response that's not confusing
 		"SELECT	postings.id AS post_id, user_id, book_title, price, book_condition, isbn, time_stamp, name, email, username, rating_value, rating_number FROM postings LEFT JOIN users ON postings.user_id = users.id WHERE postings.id="+postId,
 		function(err, response) {
 			if(err) console.log(err);
-			console.log("response from searches table:");
-			console.log(response);
+			// console.log("response from searches table:");
+			// console.log(response);
 			res.render("pages/postingDetails", {postingDetails: response, req: req.session.user_id});
 		}
 	)
@@ -129,3 +139,5 @@ router.get('/postingDetails/:id', function(req, res){
 
 
 module.exports = router;
+
+
