@@ -102,12 +102,12 @@ router.get('/searchResults', function (req, res){
 		{ isbn: searchTerm },
 		function(err, response) {
 			if(err) console.log(err);
-			if(response.length ==0){
-				//searched isbn has not been searched before
+			// if(response.length ==0){
+			// 	//searched isbn has not been searched before
 				
-			}else{
+			// }else{
 				
-			}
+			// }
 		// console.log("response from searches table:");
 		// console.log(response);
 			

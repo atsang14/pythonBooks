@@ -22,7 +22,7 @@ $.ajax({
         $("<div>").html('<img src="'+thumbnail+'" alt="thumbnail">')
     );
     $("#content").append(
-        $("<div>").html('<p>Title: '+title+'</p>')
+        $("<div>").html('<p class="postTitle">Title: '+title+'</p>')
     );
     $("#content").append(
         $("<div>").html('<p>ISBN: '+searchTerm+'</p>')

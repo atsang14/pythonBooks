@@ -16,7 +16,7 @@ $.ajax({
         $("<div>").html('<img src="'+thumbnail+'" alt="thumbnail">')
     );
     $("#ajaxData").append(
-        $("<div>").html('<p>Title: '+title+'</p>')
+        $("<div>").html('<p class="postTitle">Title: '+title+'</p>')
     );
     
 });

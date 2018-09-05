@@ -8,35 +8,52 @@
 <body>
 
   	<% include ../partials/header %>
-  	            
-
-	<div id = "searchDiv" align="center">
-	  	<form action="/search" method="POST" name="searchform" >
-			<br /> <br /><br /><br /><br /><br /><br /><br /><br /><br />
-
-			<input type="text"  placeholder="search here" name="searchterms">
-			<button>Search</button>
-			<!-- <input type="submit" name="SearchSubmit" value="Search"> -->
-
-			<!-- row to make neater. This row makes the radio buttons 
-				under the search bar-->
-			<div class="row">
-				<form>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio" checked>CRN
-				    </label>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio">Course
-				    </label>
-				    <label class="radio-inline">
-				      	<input type="radio" name="optradio">Book Name
-				   	</label>
-				   	<label class="radio-inline">
-				      	<input type="radio" name="optradio" checked>ISBN
-				    </label>
-  				</form>
+	  
+	<div class="jumbotron">
+		<div class="row">
+			<div class="col-md-4">
+				<img id="logo" src="/assets/images/pythonbooks_cl.png" alt="logo">
 			</div>
-		</form>
+			<div class="col-md-8">
+				<h1>PythonBooks</h1>
+				<h3>Squeezing the life outta your books</h3>
+				<% if(req == null) { %>
+				<hr>
+				<h3>Please log in to get started!</h3>
+				<% } %>
+			</div>
+		</div>
+	</div>
+
+	<div id = "searchDiv" class="card" align="center">
+		<div class="card-body">
+			<form action="/search" method="POST" name="searchform" >
+				<br /> <br />
+
+				<input id="isbnSearch" type="text"  placeholder="search ISBN here" name="searchterms" class="form-control">
+				<button class="btn btn-primary btn-md">Search</button>
+				<!-- <input type="submit" name="SearchSubmit" value="Search"> -->
+
+				<!-- row to make neater. This row makes the radio buttons 
+					under the search bar-->
+				<!-- <div class="row">
+					<form>
+						<label class="radio-inline">
+							<input type="radio" name="optradio" checked>CRN
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="optradio">Course
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="optradio">Book Name
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="optradio" checked>ISBN
+						</label>
+					</form>
+				</div> -->
+			</form>
+		</div>
 	</div>
 <!-- 	<div  id = "loginDiv" >
 		<form method="POST" action="/login">

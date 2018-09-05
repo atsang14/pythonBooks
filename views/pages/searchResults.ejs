@@ -12,7 +12,7 @@
 
     <div id="postings">
         <% if (searchResults){ %>
-            <div>Available Postings</div>
+            <p class="postTitle">Available Postings</p>
             <% searchResults.forEach(function(posting) { %>
                 <div>
                     <% if((posting.price % 1) == 0){ %>
@@ -32,7 +32,7 @@
                 </div>
             <% }); %>
         <% } %>
-        <a id = "amazonLink" href="" target="_blank">Purchase from Amazon</a>
+        <div id="amazon"><a id="amazonLink" href="" target="_blank">Purchase from Amazon</a></div>
         
     </div>
     
