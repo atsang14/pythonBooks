@@ -29,7 +29,7 @@
           <div class="card-body">
 
             <!-- hit the create route once form is complete -->
-            <form name="sellForm" method="POST" action="/create" role="form" onsubmit="formValidation()">
+            <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
               <div class="form-group">
                 <label for="role" >ISBN</label>
                 <input type="number" size=14 class="form-control" name="isbn" id="role"  required
@@ -51,7 +51,8 @@
 								placeholder="input whole dollar price">
               </div>
 
-              <button type="submit" class="btn btn-primary btn-md" id="add-btn"><span class="fa fa-fire"></span> Sell</button>
+              <button type="submit" class="btn btn-primary btn-md" id="add-btn">
+								<span class="fa fa-fire"></span> Sell</button>
 
             </form>
             <br>
@@ -64,26 +65,25 @@
 
 	<script>
 
-	//function to validate the form's ISBN number input and ensure it's between 10-14 digits. 
-function formValidation()
-{
+	//function to validate the form's ISBN number input and ensure it's between 10-14 digits.
+function formValidation(){
     var isbn = document.forms["sellForm"]["isbn"];
 
-    // if (isbn.value == "")
-    // {
-    //     window.alert("Please enter the book's isbn.");
-    //     isbn.focus();
-    //     return false;
-    // }
-
-		if (isbn.length >= 10 && isbn.length <= 14){
+		if (isbn.value.length >= 10 && isbn.value.length <= 14){
 		 return true;
-	 }else{
-		 alert("Please input a 10-12 digit ISBN number");
+		 console.log(isbn);
+
+	 }
+	 else
+	 {
+		 alert("Please input a 10-14 digit ISBN number");
 		 isbn.focus();
 		 return false;
+		 console.log(isbn);
+
 	 }
-}
+ }
+
 </script>
 
 
