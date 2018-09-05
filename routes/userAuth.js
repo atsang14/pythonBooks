@@ -4,8 +4,6 @@ var app 		= express();
 var path 		= require("path");
 var bcrypt 		= require('bcryptjs');
 var router  	= express.Router();
-var href	 	= '';
-var text		= '';
 
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
