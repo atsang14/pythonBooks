@@ -11,7 +11,7 @@
 <h1>Login</h1>
 
 <!-- We check if there's a next route when rendered to this page. If there is "next route",
-then just do normal login. If we want to generalize redirecting back to pages, we can just use action = '/login/<%=nextRoute%>' -->
+then just do normal login. If we want to generalize redirecting back to pages, we can just use action = login/ nextRoute -->
 <% if(typeof nextRoute != 'undefined') { %>
 	<form method="POST" action="/login/<%=nextRoute%>/<%=isbn%>">
 <% } else { %>
