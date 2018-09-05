@@ -92,7 +92,8 @@ router.post('/login/:route/:isbn', function(req,res) {
 })
 
 // loginAuth takes in the response and request arguments fromt the annonymous 
-// post request and the url argument is the url that they will redirect to
+// post request and the url argument is the url that they will redirect to.
+// Runs query to look up user info and check if password is correct.
 function loginAuth(res, req, url) {
 
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
