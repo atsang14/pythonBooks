@@ -76,35 +76,25 @@ router.post('/register', function(req,res) {
 	});
 });
 
+// if a user is attempting to login regularly from the login button
 router.post('/login', function(req,res) {
-	
-	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
-
-		if (error) throw error;
-
-		if (results.length == 0) {
-		  	res.send('try again');
-		}else {
-		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
-		  	    if (result == true) {
-		  	    	req.session.user_id = results[0].id;
-		  	      	req.session.email = results[0].email;
-
-		  	      	res.redirect('/');
-
-		  	    }else {
-		  	      	res.redirect('/');
-		  	    }
-		  	});
-		}
-	});
+	loginAuth(res, req, '')	
 })
 
+// this post request will run if a user was not logged in and tried to get into the details search
 router.post('/login/:route/:isbn', function(req,res) {
 
 	// had to do a join because for some reason there's a spacing in the isbn variable
 	var url = req.params.route+'?'+req.params.isbn;
-	var finalUrl = url.split(' ').join('')
+	var finalUrl = url.split(' ').join('');
+	loginAuth(res, req, finalUrl);
+
+})
+
+// loginAuth takes in the response and request arguments fromt the annonymous 
+// post request and the url argument is the url that they will redirect to.
+// Runs query to look up user info and check if password is correct.
+function loginAuth(res, req, url) {
 
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
@@ -118,22 +108,21 @@ router.post('/login/:route/:isbn', function(req,res) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
 
-		  	      	res.redirect('/'+finalUrl);
+		  	      	res.redirect('/'+url);
 
 		  	    }else {
-		  	      	res.redirect('/');
+		  	      	res.redirect('/'+url);
 		  	    }
 		  	});
 		}
 	});
-})
+}
 
 router.get('/logout', function(req,res) {
 	req.session.destroy(function(err) {
 		res.render('pages/logout.ejs', {req: null});
 	})
 })
-
 
 module.exports = router;
 
