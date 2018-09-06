@@ -32,7 +32,7 @@
             <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
               <div class="form-group">
                 <label for="role" >ISBN</label>
-                <input type="number" size=14 class="form-control" name="isbn" id="role"  required
+                <input type="number" size=14 class="form-control" name="isbn" id="isbn_id"  required
                placeholder="input the 10-14 digit ISBN number"/>
               </div>
 
@@ -51,8 +51,8 @@
 								placeholder="input whole dollar price">
               </div>
 
-              <button type="submit" class="btn btn-primary btn-md" id="add-btn">
-								<span class="fa fa-fire"></span> Sell</button>
+              <button type="submit" class="btn btn-primary btn-md" id="form-btn">
+								<span class="sell-btn"></span> Sell</button>
 
             </form>
             <br>
@@ -66,8 +66,9 @@
 	<script>
 
 	//function to validate the form's ISBN number input and ensure it's between 10-14 digits.
+
+var isbn = document.forms["sellForm"]["isbn"];
 function formValidation(){
-    var isbn = document.forms["sellForm"]["isbn"];
 
 		if(isbn.value.length >= 10 && isbn.value.length <= 14) {
 		 return true;
@@ -80,7 +81,18 @@ function formValidation(){
 	 }
  }
 
+//function to redirect to the details page on form submit
+	 document.getElementById("form-btn").onclick = function () {
+		 		debugger;
+				 // console.log(isbn.value);
+	       window.location.href = "http://localhost:3000/searchResults?searchterms=" + isbn.value;
+
+	     };
+		 // };
+
 </script>
+
+
 
 
 <% } else { %>
