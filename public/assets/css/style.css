@@ -11,12 +11,27 @@
 body {
     background-image: url("/assets/images/funky-lines.png");
     background-repeat: repeat;
+    font-family: 'Ubuntu', sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+#maroon {
+    color: #800000;
+}
+
+#navy {
+    color: #000080;
 }
 
 .jumbotron {
     width: 85%;
     margin: auto;
     padding: 5%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px gray;
+    background-color: white;
+    font-family: 'Baloo Tammudu', cursive;
 }
 
 #logo {
@@ -26,7 +41,12 @@ body {
 
 #content, #postings, #details {
     width: 80%;
-    margin: auto;
+    margin: 10px auto;
+    padding: 15px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px gray;
+    background-color: white;
 }
 
 .postTitle {

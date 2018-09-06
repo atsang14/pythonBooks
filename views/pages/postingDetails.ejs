@@ -7,12 +7,14 @@
 <body>
     <% include ../partials/header %>
 
-    <div id="content"></div>
-    
-    <div id="details">
+    <div id="content">
         <!-- postingDetails.js will use the value of isbn in order to populate into ajaxData -->
         <div id="ajaxData"></div>
         <div id="isbn" isbn="<%= postingDetails[0].isbn %>">ISBN: <%= postingDetails[0].isbn %></div>
+    </div>
+    
+    <div id="details">
+        
         <div>Seller: <%= postingDetails[0].username %></div>
         <div>Seller email: <%= postingDetails[0].email %></div>
         <div>Selling price: 
