@@ -13,54 +13,99 @@
 <% if (req != null ) { %>
   <div class="container">
     <div class="jumbotron">
-      <h1>Python Books</h1>
+      <!-- <h1>Python Books</h1>
       <h3>Squeezing the life out of books</h3>
       <hr>
-      <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Books</button></a>
-    </div>
-    <div class="row">
-
-      <div class="col-12">
-
-        <div class="card">
-          <div class="card-header">
-            <h3><strong>Add Book</strong></h3>
-          </div>
-          <div class="card-body">
-
-            <!-- hit the create route once form is complete -->
-            <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
-              <div class="form-group">
-                <label for="role" >ISBN</label>
-                <input type="number" size=14 class="form-control" name="isbn" id="isbn_id"  required
-               placeholder="input the 10-14 digit ISBN number"/>
-              </div>
-
-              <div class="form-group">
-                  <label for="age">Condition</label>
-									<br>
-										<input type="radio" name="book_condition" value="Very Used"> Very Used<br>
-									   <input type="radio" name="book_condition" value="Lightly Used"> Lightly Used<br>
-									   <input type="radio" name="book_condition" value="Like New"> Like New
-                  </div>
-              </div>
-
-              <div class="form-group">
-                <label>Price</label>
-                <input type="number" class="form-control" name="price" required
-								placeholder="input whole dollar price">
-              </div>
-
-              <button type="submit" class="btn btn-primary btn-md" id="form-btn">
-								<span class="sell-btn"></span> Sell</button>
-
-            </form>
-            <br>
-
+      <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Books</button></a> -->
+      <div class="row">
+        <div class="col-sm-6">
+          <img id="logo" src="/assets/images/pythonbooks_cl.png" alt="logo">
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              <h3><strong>Add Book</strong></h3>
+            </div>
+            <div class="card-body">
+  
+              <!-- hit the create route once form is complete -->
+              <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
+                <div class="form-group">
+                  <label for="role" >ISBN</label>
+                  <input type="number" size=14 class="form-control" name="isbn" id="isbn_id"  required
+                 placeholder="input the 10-14 digit ISBN number"/>
+                </div>
+  
+                <div class="form-group">
+                    <label for="age">Condition</label>
+                    <br>
+                      <input type="radio" name="book_condition" value="Very Used"> Very Used<br>
+                       <input type="radio" name="book_condition" value="Lightly Used"> Lightly Used<br>
+                       <input type="radio" name="book_condition" value="Like New"> Like New
+                    </div>
+                </div>
+  
+                <div class="form-group">
+                  <label>Price</label>
+                  <input type="number" class="form-control" name="price" required
+                  placeholder="input whole dollar price">
+                </div>
+  
+                <button type="submit" class="btn btn-primary btn-md" id="form-btn">
+                  <span class="sell-btn"></span> Sell</button>
+  
+              </form>
+              <br>
+  
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+            <!-- <div class="row">
+
+              <div class="col-12">
+
+                <div class="card">
+                  <div class="card-header">
+                    <h3><strong>Add Book</strong></h3>
+                  </div>
+                  <div class="card-body">
+
+                 
+                    <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
+                      <div class="form-group">
+                        <label for="role" >ISBN</label>
+                        <input type="number" size=14 class="form-control" name="isbn" id="isbn_id"  required
+                      placeholder="input the 10-14 digit ISBN number"/>
+                      </div>
+
+                      <div class="form-group">
+                          <label for="age">Condition</label>
+                          <br>
+                            <input type="radio" name="book_condition" value="Very Used"> Very Used<br>
+                            <input type="radio" name="book_condition" value="Lightly Used"> Lightly Used<br>
+                            <input type="radio" name="book_condition" value="Like New"> Like New
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" class="form-control" name="price" required
+                        placeholder="input whole dollar price">
+                      </div>
+
+                      <button type="submit" class="btn btn-primary btn-md" id="form-btn">
+                        <span class="sell-btn"></span> Sell</button>
+
+                    </form>
+                    <br>
+
+                  </div>
+                </div>
+              </div>
+            </div> -->
   </div>
 
 	<script>
