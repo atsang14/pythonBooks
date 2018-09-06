@@ -46,7 +46,7 @@ hr {
     border-color: #292929;
 }
 
-#isbnSearch {
+.form-control {
     width: 200px;
     margin-bottom: 15px;
 }
