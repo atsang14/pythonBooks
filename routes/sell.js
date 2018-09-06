@@ -37,7 +37,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "ym",
+  password: "password",
   database: "pythonbooks_db"
 });
 
@@ -54,7 +54,7 @@ router.post('/create', function(req, res){
 
 	// If the user is not logged in
 	if(req.session.user_id == null) {
-		
+
 		// login prompt can go here
 		console.log('Login First');
 	}else {
@@ -69,7 +69,7 @@ function isbnQuery(request, originalRes) {
 	// query to check if isbn is already in the database. We use this to grab the book title
 	// if the isbn is already in the database
 	var query = "SELECT book_title FROM postings WHERE isbn = '"+request.body.isbn+"'"
-	
+
 	connection.query(query, function(err, res) {
 		if(err) console.log(err);
 		else {
@@ -83,25 +83,25 @@ function isbnQuery(request, originalRes) {
 // We use these arguments to test if the book title is already in the db.
 // If it's not already in the db then we make a request to get the book title.
 function checkTable(originalRequest, originalRes, res) {
-	
+
 	var bookTitle = '';
 	var postings = "user_id, book_title, price, book_condition, isbn, time_stamp";
 	var values = '';
 	originalRequest.body.user_id = parseInt(originalRequest.session.user_id);
 
 	if(res.length == 0) {
-		
+
 		var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'+originalRequest.body.isbn;
 		request(url, function(err, response, body) {
 			if (!err && response.statusCode === 200) {
-				
+
 				bookTitle = JSON.parse(body).items[0].volumeInfo.title;
 				values = originalRequest.body.user_id+", '"+bookTitle+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
 				runFinalQuery(originalRes, postings, values);
 	  		} else console.log(err);
 		});
 	} else {
-	
+
 		values = originalRequest.body.user_id+", '"+res[0].book_title+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
 		runFinalQuery(originalRes, postings, values);
 	}
@@ -115,32 +115,7 @@ function runFinalQuery(originalRes, postings, values) {
 		  	if(err) console.log(err);
 		    originalRes.redirect('/');
 	  	}
-	);	
+	);
 }
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
