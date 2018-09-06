@@ -69,18 +69,14 @@
 function formValidation(){
     var isbn = document.forms["sellForm"]["isbn"];
 
-		if (isbn.value.length >= 10 && isbn.value.length <= 14){
+		if(isbn.value.length >= 10 && isbn.value.length <= 14) {
 		 return true;
-		 console.log(isbn);
-
-	 }
-	 else
-	 {
+		 // console.log(isbn);
+	 } else {
 		 alert("Please input a 10-14 digit ISBN number");
 		 isbn.focus();
 		 return false;
-		 console.log(isbn);
-
+		 // console.log(isbn);
 	 }
  }
 
