@@ -4,8 +4,6 @@ var app 		= express();
 var path 		= require("path");
 var bcrypt 		= require('bcryptjs');
 var router  	= express.Router();
-var href	 	= '';
-var text		= '';
 
 //you need this to be able to process information sent to a POST route
 	var bodyParser = require('body-parser');
@@ -51,19 +49,25 @@ router.get('/', function(req, res) {
 	res.render("pages/home", {req: req.session.user_id});
 });
 
+// User clicked login button on nav-bar
 router.get('/loginPage', function(req,res) {
 	res.render("pages/login", {req: req.session.user_id});
 });
 
+// We use these params in order to remember the last page the user tried accessing
+// req.session.user_id is used to check if there user is logged in
+// req.params.nextRoute is used to grab the next route
+// req.params.isbn is used to specify which book the user looked for.
 router.get('/loginPage/:nextRoute/:isbn', function(req,res) {
-	
 	res.render("pages/login", {req: req.session.user_id, nextRoute: req.params.nextRoute, isbn: req.params.isbn});
 });
 
+// User just clicked register button on nav-bar
 router.get('/registerPage', function(req,res) {
 	res.render("pages/register", {req: req.session.user_id});
 })
 
+// This route happens when user enters register information from register.ejs file in views/pages
 router.post('/register', function(req,res) {
 	bcrypt.genSalt(10, function(err, salt) {
 		
@@ -102,7 +106,8 @@ function loginAuth(res, req, url) {
 
 		if (results.length == 0) {
 		  	res.send('try again');
-		}else {
+		} else {
+			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
@@ -110,7 +115,7 @@ function loginAuth(res, req, url) {
 
 		  	      	res.redirect('/'+url);
 
-		  	    }else {
+		  	    } else {
 		  	      	res.redirect('/'+url);
 		  	    }
 		  	});
@@ -118,6 +123,7 @@ function loginAuth(res, req, url) {
 	});
 }
 
+// When user clicks the logout button they will hit this route and end a session.
 router.get('/logout', function(req,res) {
 	req.session.destroy(function(err) {
 		res.render('pages/logout.ejs', {req: null});

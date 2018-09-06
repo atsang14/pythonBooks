@@ -54,10 +54,6 @@ app.use('/', userAuthRoutes);
 app.use('/', searchRoutes);
 app.use('/', sellRoutes);
 
-app.get('/', function(req, res) {
-	res.render("pages/home");
-});
-
 // this is the api where we can grab information and use it in the 
 // ajax requests in post.js file
 app.get('/api', function(req, res){
