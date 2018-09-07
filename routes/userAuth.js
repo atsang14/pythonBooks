@@ -111,11 +111,10 @@ function loginAuth(res, req, url) {
 
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
-		if (error) throw error;
-
-		if (results.length == 0) {
-		  	res.send('try again');
+		if (results.length == 0 || error) {
+		  	res.render('pages/login', {req: req.session.user_id, error: true});
 		} else {
+			
 			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    if (result == true) {
@@ -123,11 +122,10 @@ function loginAuth(res, req, url) {
 		  	      	req.session.email = results[0].email;
 		  	      	req.session.routerInfo = [];
 		  	      	req.session.logInTime = getTime()
-
 		  	      	res.redirect('/'+url);
 
 		  	    } else {
-		  	      	res.redirect('/'+url);
+		  	      	res.render('pages/login', {req: req.session.user_id, error: true});
 		  	    }
 		  	});
 		}
