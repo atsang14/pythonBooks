@@ -74,8 +74,7 @@ router.post('/register', function(req,res) {
 			
 			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
 				
-				 if(error) res.render('pages/register', {req: req.session.user_id, error: true});
-				 //res.redirect('/registerPage/error');
+				if(error) res.render('pages/register', {req: req.session.user_id, error: true});
 				else res.render('pages/login', {req: req.session.user_id});
 			});
 		});
@@ -114,14 +113,14 @@ function loginAuth(res, req, url) {
 		if (results.length == 0 || error) {
 		  	res.render('pages/login', {req: req.session.user_id, error: true});
 		} else {
-			
+
 			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
 		  	      	req.session.routerInfo = [];
-		  	      	req.session.logInTime = getTime()
+		  	      	req.session.logInTime = getTime();
 		  	      	res.redirect('/'+url);
 
 		  	    } else {
@@ -131,6 +130,13 @@ function loginAuth(res, req, url) {
 		}
 	});
 }
+
+
+// function registerQuery(originalReq, originalRes) {
+// 	connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
+// 	  	res.render('pages/login', {req: req.session.user_id});
+// 	});
+// }
 
 module.exports = router;
 

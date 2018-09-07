@@ -45,9 +45,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/search', function(req, res){
-	console.log(req);
-	console.log("-----")
-	console.log(req.body.searchterms)
+	// console.log(req);
+	// console.log("-----")
+	// console.log(req.body.searchterms)
 	// console.log(req._parsedOriginalUrl.search);
 	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
 
