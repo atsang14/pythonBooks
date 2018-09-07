@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         
         <div class="navbar-header">
@@ -13,9 +13,9 @@
 
         <div id="navbar7" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li id="navHome" class="nav-item"><a href="/">Home</a></li>
+                <li id="navHome" class="nav-item"><a href="/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                 <% if(req != null) { %>
-                <li id="navSell" class="nav-item"><a href="/sell">Sell</a></li>
+                <li id="navSell" class="nav-item"><a href="/sell"><span class="glyphicon glyphicon-pushpin"></span> Sell</a></li>
                 <% } %>
                 <!-- <li id="navSupport" class="nav-item"><a href="">Support</a></li>
                 <li id="navAbout" class="nav-item"><a href="">About</a></li> -->
@@ -23,10 +23,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- req will be passed via res.render for every page in order for this part of the navbar to work -->
                 <% if(req != null) { %>
-                    <li id="navLogStatus" class="nav-item"><a href="/logout">Logout</a></li>
+                    <li id="navLogStatus" class="nav-item"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 <% } else if(req == null) { %>
-                    <li id="navLogStatus" class="nav-item"><a href="/loginPage">Login</a></li>
-                    <li id="navRegister" class="nav-item"><a href="/registerPage">Register</a></li>
+                    <li id="navLogStatus" class="nav-item"><a href="/loginPage"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li id="navRegister" class="nav-item"><a href="/registerPage"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                 <% } %>
             </ul>
         </div>

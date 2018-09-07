@@ -14,6 +14,7 @@ body {
     font-family: 'Ubuntu', sans-serif;
     text-align: justify;
     text-justify: inter-word;
+    margin-top: 75px
 }
 
 #maroon {
@@ -25,12 +26,15 @@ body {
 }
 
 .jumbotron {
-    width: 85%;
+    width: 80%;
     margin: auto;
-    padding: 5%;
+    padding: 0% 5% 2% 5%;
     border-radius: 10px;
     box-shadow: 5px 5px 20px gray;
     background-color: white;
+}  
+
+.col-sm-8 {
     text-align: center;
 }
 
@@ -49,8 +53,9 @@ body {
     }
     .sellCard {
         background-image: url("/assets/images/pythonbooks_la.png");
-        background-size: 100% 100%;
+        background-size: 70% 80%;
         background-repeat: no-repeat;
+        background-position: center;
         width: 100%;
     }
     .sellCard > * {
@@ -75,8 +80,7 @@ body {
     background-color: white;
 }
 
-.loginCard {
-    width: 50%;
+.loginCard, .registerCard {
     margin: 10px auto;
     padding: 15px;
     border: solid 1px gray;
@@ -89,6 +93,14 @@ body {
     background-position: center;
 }
 
+.loginCard {
+    width: 300px;
+}
+
+.registerCard {
+    width: 400px;
+}
+
 .postTitle {
     font-size: 16px;
 }
@@ -99,6 +111,11 @@ h1, .postTitle {
 
 #amazon {
     margin-top: 10px;
+}
+
+#amazonLogo {
+    width: 145px;
+    height: 70px;
 }
 
 #isbn {
@@ -115,5 +132,16 @@ hr {
 }
 
 .btn{
+    background-color: #800000;
+    border: none;
+}
+
+.btn:hover{
     background-color: #000080;
+    border: none;
+    font-weight: bold;
+}
+
+th {
+    padding-right: 50px;
 }
