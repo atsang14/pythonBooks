@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "password",
+  password: "ym",
   database: "pythonbooks_db"
 });
 
@@ -45,9 +45,9 @@ router.get('/', function(req, res) {
 });
 
 router.post('/search', function(req, res){
-	// console.log(req);
-	// console.log("-----")
-	// console.log(req.body.searchterms)
+	console.log(req);
+	console.log("-----")
+	console.log(req.body.searchterms)
 	// console.log(req._parsedOriginalUrl.search);
 	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
 

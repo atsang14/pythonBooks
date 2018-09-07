@@ -13,7 +13,7 @@
     <div id="postings">
         <% if (searchResults){ %>
             <p class="postTitle">Available Postings</p>
-            <% searchResults.forEach(function(posting) { %>
+            <!-- <% searchResults.forEach(function(posting) { %>
                 <div>
                     <% if((posting.price % 1) == 0){ %>
                         <span>$<%= posting.price %>.00 - </span>
@@ -30,9 +30,34 @@
                     <% } %>
                     
                 </div>
-            <% }); %>
+            <% }); %> -->
+            <table>
+                <tr>
+                    <th>Asking Price</th><th>Book Condition</th>
+                </tr>
+                <% searchResults.forEach(function(posting) { %>
+                    <tr>
+                        <% if((posting.price % 1) == 0){ %>
+                            <td>$<%= posting.price %>.00</td>
+                        <% }else if(((posting.price*10) % 1) == 0){ %>
+                            <td>$<%= posting.price %>0</td>
+                        <% }else{ %>
+                            <td>$<%= posting.price %></td>
+                        <% } %>    
+                        <td><%= posting.book_condition %></td>
+                        <% if (req==null){ %>
+                            <td><a href="/loginPage<%= nextRoute %>/ <%= searchTerm %>">Please login to contact seller</a></td>
+                        <% } else { %>
+                            <td><a href="/postingDetails/<%= posting.id  %>">Details</a></td>
+                        <% } %>
+                        
+                    </tr>
+                <% }); %>
+            </table>
+            
+
         <% } %>
-        <div id="amazon"><a id="amazonLink" href="" target="_blank">Purchase from Amazon</a></div>
+        <div id="amazon"><a id="amazonLink" href="" target="_blank"><img id="amazonLogo" src="/assets/images/amazon-logo_transparent.png" alt="amazonlogo"></a></div>
         
     </div>
     
