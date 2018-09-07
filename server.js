@@ -63,6 +63,28 @@ app.get('/api', function(req, res){
   	});
 });
 
+// This global function will return the time when this function was called.
+global.getTime = function() {
+	var timeStamp = new Date();
+	var startTime = timeStamp.getDate() + "/"
+                + (timeStamp.getMonth()+1)  + "/" 
+                + timeStamp.getFullYear() + " @ "  
+                + timeStamp.getHours() + ":"  
+                + timeStamp.getMinutes() + ":" 
+                + timeStamp.getSeconds();
+
+    return startTime;
+}
+
+// This global function will save the url the user was on and the time they enntered the route
+global.addRouteInfo = function(req) {
+
+	if(req.session.routerInfo != null) {
+		req.session.routerInfo.push({route: req.originalUrl, time: getTime()})
+		return true;
+	} else return false;
+}
+
 // here in postings route, we bring up the postings.html file.
 // Then, in the postings.html file we specifiy we are using
 // the post.js javascript file and request the api from our database.

@@ -112,6 +112,8 @@ function loginAuth(res, req, url) {
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
+		  	      	req.session.routerInfo = [];
+		  	      	req.session.logInTime = getTime()
 
 		  	      	res.redirect('/'+url);
 
@@ -125,6 +127,8 @@ function loginAuth(res, req, url) {
 
 // When user clicks the logout button they will hit this route and end a session.
 router.get('/logout', function(req,res) {
+
+	req.session.logoutTime = getTime();
 	req.session.destroy(function(err) {
 		res.render('pages/logout.ejs', {req: null});
 	})
