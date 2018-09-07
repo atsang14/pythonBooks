@@ -31,6 +31,7 @@ body {
     border-radius: 10px;
     box-shadow: 5px 5px 20px gray;
     background-color: white;
+    text-align: center;
 }
 
 #logo {
@@ -46,14 +47,21 @@ body {
     .shrinkHide {
       display: none;
     }
-    .card {
+    .sellCard {
         background-image: url("/assets/images/pythonbooks_la.png");
         background-size: 100% 100%;
         background-repeat: no-repeat;
         width: 100%;
     }
-    .card > * {
+    .sellCard > * {
         margin-left: 95px;
+    }
+    .col-sm-8 {
+        background-image: url("/assets/images/pythonbooks_la.png");
+        background-size: 50% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
     }
 }
 
@@ -67,8 +75,25 @@ body {
     background-color: white;
 }
 
+.loginCard {
+    width: 50%;
+    margin: 10px auto;
+    padding: 15px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px gray;
+    background-color: white;
+    background-image: url("/assets/images/pythonbooks_la.png");
+    background-size: 60% 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .postTitle {
     font-size: 16px;
+}
+
+h1, .postTitle {
     font-weight: bold;
 }
 
@@ -81,7 +106,7 @@ body {
 }
 
 hr {
-    border-color: #292929;
+    border-color: lightgray;
 }
 
 .form-control {
