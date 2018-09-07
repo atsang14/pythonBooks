@@ -68,14 +68,12 @@ router.get('/registerPage', function(req,res) {
 })
 
 // This route happens when user enters register information from register.ejs file in views/pages
-router.post('/register', function(req,res) {
+router.post('/register', function(req,res) {	
 	bcrypt.genSalt(10, function(err, salt) {
-		
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
-			
 			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
-	    	  	res.redirect('/');
-	    	});
+	  			res.render('pages/login', {req: req.session.user_id});
+			});
 		});
 	});
 });
@@ -92,8 +90,16 @@ router.post('/login/:route/:isbn', function(req,res) {
 	var url = req.params.route+'?'+req.params.isbn;
 	var finalUrl = url.split(' ').join('');
 	loginAuth(res, req, finalUrl);
-
 })
+
+// When user clicks the logout button they will hit this route and end a session.
+router.get('/logout', function(req,res) {
+
+	req.session.logoutTime = getTime();
+	req.session.destroy(function(err) {
+		res.render('pages/logout.ejs', {req: null});
+	})
+});
 
 // loginAuth takes in the response and request arguments fromt the annonymous 
 // post request and the url argument is the url that they will redirect to.
@@ -124,15 +130,6 @@ function loginAuth(res, req, url) {
 		}
 	});
 }
-
-// When user clicks the logout button they will hit this route and end a session.
-router.get('/logout', function(req,res) {
-
-	req.session.logoutTime = getTime();
-	req.session.destroy(function(err) {
-		res.render('pages/logout.ejs', {req: null});
-	})
-})
 
 module.exports = router;
 
