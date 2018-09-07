@@ -18,8 +18,8 @@
       <hr>
       <a href="/"><button class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Books</button></a> -->
       <div class="row">
-        <div class="col-sm-6">
-          <img id="logo" src="/assets/images/pythonbooks_cl.png" alt="logo">
+        <div class="col-sm-6 shrinkHide">
+            <img id="logo" src="/assets/images/pythonbooks_cl.png" alt="logo">
         </div>
         <div class="col-sm-6">
           <div class="card">
@@ -32,22 +32,24 @@
               <form name="sellForm" method="POST" action="/create" role="form" onsubmit="return formValidation()">
                 <div class="form-group">
                   <label for="role" >ISBN</label>
-                  <input type="number" size=14 class="form-control" name="isbn" id="isbn_id"  required
-                 placeholder="input the 10-14 digit ISBN number"/>
+                  <input type="text" class="form-control" name="isbn" id="isbn_id"  required
+                 placeholder="input ISBN number"/>
+                 <!-- <input type="text" size=14 class="form-control" name="isbn" id="isbn_id"  required
+                 placeholder="input ISBN number"/> -->
                 </div>
   
                 <div class="form-group">
                     <label for="age">Condition</label>
                     <br>
                       <input type="radio" name="book_condition" value="Very Used"> Very Used<br>
-                       <input type="radio" name="book_condition" value="Lightly Used"> Lightly Used<br>
+                       <input type="radio" name="book_condition" value="Lightly Used" checked="checked"> Lightly Used<br>
                        <input type="radio" name="book_condition" value="Like New"> Like New
                     </div>
                 </div>
   
                 <div class="form-group">
                   <label>Price</label>
-                  <input type="number" class="form-control" name="price" required
+                  <input type="number" min="0.01" step="0.01" max="25000" class="form-control" name="price" required
                   placeholder="input whole dollar price">
                 </div>
   
@@ -112,9 +114,9 @@
 
 	//function to validate the form's ISBN number input and ensure it's between 10-14 digits.
 
-var isbn = document.forms["sellForm"]["isbn"];
-function formValidation(){
 
+function formValidation(){
+  var isbn = document.forms["sellForm"]["isbn"];
 		if(isbn.value.length >= 10 && isbn.value.length <= 14) {
 		 return true;
 		 // console.log(isbn);
@@ -128,7 +130,6 @@ function formValidation(){
 
 //function to redirect to the details page on form submit
 	 document.getElementById("form-btn").onclick = function () {
-		 		debugger;
 				 // console.log(isbn.value);
 	       window.location.href = "http://localhost:3000/searchResults?searchterms=" + isbn.value;
 
@@ -139,7 +140,7 @@ function formValidation(){
 
 
 
-
+<!-- no need to have this part anymore since sell is hidden until login -->
 <% } else { %>
   <h1>You must login before you can Sell</h1>
   <form method="POST" action="/login">

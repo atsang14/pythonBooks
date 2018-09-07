@@ -35,7 +35,26 @@ body {
 
 #logo {
     width: 80%;
-    margin-top: 10px;
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    /* opacity: 0.5; */
+}
+
+@media (max-width: 768px) {
+    .shrinkHide {
+      display: none;
+    }
+    .card {
+        background-image: url("/assets/images/pythonbooks_la.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        width: 100%;
+    }
+    .card > * {
+        margin-left: 95px;
+    }
 }
 
 #content, #postings, #details {
