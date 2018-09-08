@@ -77,10 +77,13 @@ global.getTime = function() {
 }
 
 // This global function will save the url the user was on and the time they enntered the route
-global.addRouteInfo = function(req) {
+global.addRouteInfo = function(req, url) {
 
-	if(req.session.routerInfo != null) {
-		req.session.routerInfo.push({route: req.originalUrl, time: getTime()})
+	if((typeof req.session.routerInfo != 'undefined') && (typeof url == 'undefined')) {
+		req.session.routerInfo.push({route: req.originalUrl, time: getTime()});
+		return true;
+	} else if ((typeof req.session.routerInfo != 'undefined') && (typeof url != 'undefined')) {
+		req.session.routerInfo.push({route: url, time: getTime()});
 		return true;
 	} else return false;
 }

@@ -45,6 +45,8 @@ var connection = mysql.createConnection({
 // if the user is not logged in, then it will send them to
 // the login page.
 router.get('/sell', function(req, res){
+	addRouteInfo(req);
+	console.log(req.session.routerInfo);
 	res.render('pages/sell', {req: req.session.user_id});
 });
 
@@ -99,7 +101,7 @@ function checkTable(originalRequest, originalRes, res) {
 				values = originalRequest.body.user_id+", '"+bookTitle+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
 				
 				// run insert query function here
-				runFinalQuery(originalRes, isbn, postings, values);
+				runFinalQuery(originalRequest, originalRes, isbn, postings, values);
 	  		} else res.send('There was an error');
 		});
 	} else {
@@ -107,16 +109,18 @@ function checkTable(originalRequest, originalRes, res) {
 		values = originalRequest.body.user_id+", '"+res[0].book_title+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
 		
 		// run insert query function here
-		runFinalQuery(originalRes, isbn, postings, values);
+		runFinalQuery(originalRequest, originalRes, isbn, postings, values);
 	}
 }
 
 // this final query function runs a query based conditions in checkTable();
-function runFinalQuery(originalRes, isbn, postings, values) {
+function runFinalQuery(originalRequest, originalRes, isbn, postings, values) {
 	connection.query(
 		  	"INSERT INTO postings ("+postings+") VALUES ("+values+")",
 	  	function(err, response) {
-		  	
+	  		
+		  	addRouteInfo(originalRequest, '/searchResults?searchterms='+isbn);
+		  	console.log(originalRequest.session.routerInfo);
 		  	if(err) originalRes.send('Insert Error, Place error handler page here');
 		  	else originalRes.redirect('/searchResults?searchterms='+isbn);
 	  	}

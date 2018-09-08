@@ -46,6 +46,8 @@ router.use(express.static("../public"));
 // We will change the route when we want to integrate to login page.
 // We will also change the file path as well to the correct login prompt
 router.get('/', function(req, res) {
+	addRouteInfo(req);
+	console.log(req.session.routerInfo);
 	res.render("pages/home", {req: req.session.user_id});
 });
 
@@ -59,6 +61,8 @@ router.get('/loginPage', function(req,res) {
 // req.params.nextRoute is used to grab the next route
 // req.params.isbn is used to specify which book the user looked for.
 router.get('/loginPage/:nextRoute/:isbn', function(req,res) {
+
+	console.log(req.params.nextRoute, 'line 62');
 	res.render("pages/login", {req: req.session.user_id, nextRoute: req.params.nextRoute, isbn: req.params.isbn});
 });
 
@@ -116,10 +120,15 @@ router.get('/logout', function(req,res) {
 // post request and the url argument is the url that they will redirect to.
 // Runs query to look up user info and check if password is correct.
 function loginAuth(req, res, url) {
-
+	
 	// if use tries to log in with no input
 	if(req.body.email == '') {
-		res.render('pages/login', {req: req.session.user_id, noInput: true})
+		
+		if(url != '') {
+			redirectToPostings(res, url)
+		} else {
+			res.render('pages/login', {req: req.session.user_id, noInput: true});
+		}
 	} else {
 		loginAuthQuery(req, res, url);
 	}
@@ -144,11 +153,18 @@ function loginAuthQuery(req, res, url) {
 			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
 
+		  		// user is logged in here
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
 		  	      	req.session.routerInfo = [];
 		  	      	req.session.logInTime = getTime();
+		  	      	if(url == '') {
+		  	      		addRouteInfo(req);
+		  	      	} else {
+		  	      		addRouteInfo(req, '/'+url);
+		  	      	}
+		  	      	
 		  	      	res.redirect('/'+url);
 
 		  	    } else if(url != '') {

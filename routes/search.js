@@ -42,14 +42,17 @@ var connection = mysql.createConnection({
 router.get('/', function(req, res) {
 	
 	res.render("pages/home", {req: req.session.user_id});
+	console.log(req.session.routerInfo);
 });
 
 router.post('/search', function(req, res){
-	console.log(req);
-	console.log("-----");
-	console.log(req.body.searchterms);
+	// console.log(req);
+	// console.log("-----");
+	// console.log(req.body.searchterms);
 	if (req.body.searchBy=="title"){
 		//route to intermediate page to narrow search results
+		addRouteInfo(req, '/titleResults?searchterms='+req.body.searchterms);
+		console.log(req.session.routerInfo);
 		res.redirect('/titleResults?searchterms='+req.body.searchterms);
 	} else {
 		// search term is the isbn
@@ -80,11 +83,12 @@ router.post('/search', function(req, res){
 				}
 				// console.log('you are on line 78');
 				// route: nextRoute
+				addRouteInfo(req, '/searchResults?searchterms='+req.body.searchterms); 
+				console.log(req.session.routerInfo);
 				res.redirect('/searchResults?searchterms='+req.body.searchterms);
 			}
 		);
 	}
-	
 });
 
 router.get('/titleResults', function (req, res){
@@ -95,7 +99,8 @@ router.get('/titleResults', function (req, res){
 	var queryArray = queryStr.split("&");
 	var searchTerm = queryArray[0].split("=")[1];
 	// res.render("pages/searchIntermediate", {searchTerm: searchTerm});
-	if (req.session.hasOwnProperty("user_id")){		
+	if (req.session.hasOwnProperty("user_id")){
+
 		res.render("pages/searchIntermediate", {searchTerm: searchTerm, req: req.session.user_id});
 	} else {
 		res.render("pages/searchIntermediate", {searchTerm: searchTerm, req: null});
@@ -122,8 +127,8 @@ router.get('/searchResults', function (req, res){
 		function(err, response) {
 			if(err) console.log(err);
 			
-			console.log("response from searches table:");
-			console.log(response);
+			// console.log("response from searches table:");
+			// console.log(response);
 			
 			// if user is logged in, else
 			if (req.session.hasOwnProperty("user_id")){		
@@ -138,6 +143,8 @@ router.get('/searchResults', function (req, res){
 router.get('/postingDetails/:id', function(req, res){
 	// console.log("within posting details, req:")
 	// console.log(req);
+	addRouteInfo(req);
+	console.log(req.session.routerInfo);
 	var postId = req.params.id;
 	var query = connection.query(
 		//when joining the postings and the users table, and both tables have id column, have to alias one column and not select the other column in order to produce a response that's not confusing
@@ -150,7 +157,6 @@ router.get('/postingDetails/:id', function(req, res){
 		}
 	)
 })
-
 
 module.exports = router;
 
