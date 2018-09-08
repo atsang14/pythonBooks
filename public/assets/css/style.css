@@ -145,3 +145,7 @@ hr {
 th {
     padding-right: 50px;
 }
+.error{
+    text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF
+}
+

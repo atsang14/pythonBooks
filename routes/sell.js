@@ -90,22 +90,23 @@ function checkTable(originalRequest, originalRes, res) {
 
 	// if not in db
 	if(res.length == 0) {
-
+		
 		var url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'+originalRequest.body.isbn;
 		request(url, function(err, response, body) {
 			if (!err && response.statusCode === 200) {
 
 				bookTitle = JSON.parse(body).items[0].volumeInfo.title;
 				values = originalRequest.body.user_id+", '"+bookTitle+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
-
-				console.log(values, 'line 101');
-				runFinalQuery(originalRes, isbn,postings, values);
-	  		} else console.log(err);
+				
+				// run insert query function here
+				runFinalQuery(originalRes, isbn, postings, values);
+	  		} else res.send('There was an error');
 		});
 	} else {
 
 		values = originalRequest.body.user_id+", '"+res[0].book_title+"', '"+originalRequest.body.price+"', '"+originalRequest.body.book_condition+"', '"+originalRequest.body.isbn+"', NOW()";
-		console.log(values, 'line 108');
+		
+		// run insert query function here
 		runFinalQuery(originalRes, isbn, postings, values);
 	}
 }

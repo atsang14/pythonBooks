@@ -68,7 +68,8 @@ router.get('/registerPage', function(req,res) {
 })
 
 // This route happens when user enters register information from register.ejs file in views/pages
-router.post('/register', function(req,res) {	
+router.post('/register', function(req,res) {
+	
 	bcrypt.genSalt(10, function(err, salt) {
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 			
@@ -130,7 +131,6 @@ function loginAuth(res, req, url) {
 		}
 	});
 }
-
 
 // function registerQuery(originalReq, originalRes) {
 // 	connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
