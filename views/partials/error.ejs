@@ -1,0 +1,10 @@
+<% if(typeof error != 'undefined') { %>
+	<% if(typeof email != 'undefined') { %>
+		<h3><font color="red">Invalid Email or password. Please try again.</h3>
+	<% } else { %>
+		<h3><font color="red">Invalid Email. Please try again.</h3>
+	<% } %>
+<% } else if(typeof noInput != 'undefined') { %>
+	<h3><font color="red">Please fill out form to login</h3>
+<% } %>
+

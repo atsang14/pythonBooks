@@ -17,9 +17,9 @@ CREATE TABLE users(
 
 INSERT INTO users (name, email, username, password, rating_value, rating_number)
 VALUES
-("Kelly Hook", "kellymhook@gmail.com", "kmhook", "hello", 0, 0),
-("Austin Tsang", "atsang14@gmail.com", "atsang", "hello", 0, 0),
-("Yanan Meng", "meng.yanan@gmail.com", "ymeng", "hello", 0, 0);
+("Kelly Hook", "km@lala.com", "kmhook", "$2a$10$K5z4rcOcV56pjP2bHG8snuivjXPaeBuDXHhzeMAU68GLkasO.Fxe6", 0, 0),
+("Austin Tsang", "at@lala.com", "atsang", "$2a$10$K5z4rcOcV56pjP2bHG8snuivjXPaeBuDXHhzeMAU68GLkasO.Fxe6", 0, 0),
+("Yanan Meng", "my@lala.com", "ymeng", "$2a$10$K5z4rcOcV56pjP2bHG8snuivjXPaeBuDXHhzeMAU68GLkasO.Fxe6", 0, 0);
 
 SELECT * FROM users;
 

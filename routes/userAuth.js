@@ -64,25 +64,35 @@ router.get('/loginPage/:nextRoute/:isbn', function(req,res) {
 
 // User just clicked register button on nav-bar
 router.get('/registerPage', function(req,res) {
-	res.render("pages/register", {req: req.session.user_id});
+	res.render('pages/register', {req: req.session.user_id});
 })
 
 // This route happens when user enters register information from register.ejs file in views/pages
 router.post('/register', function(req,res) {
-	bcrypt.genSalt(10, function(err, salt) {
-		
-		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
-			
-			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
-	    	  	res.redirect('/');
-	    	});
+
+	// if user tries to register without any input
+	if(req.body.name == '' || req.body.email == '' || req.body.username == '') {
+		res.render('pages/register', {req: req.session.user_id, noInput: true})
+	}
+	else {
+		// encrypt password
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(req.body.password, salt, function(err, p_hash) {
+				
+				connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
+					
+					// email is unique in db so, error if there is already email in use
+					if(error) res.render('pages/register', {req: req.session.user_id, error: true});
+					else res.render('pages/login', {req: req.session.user_id});
+				});
+			});
 		});
-	});
+	}
 });
 
 // if a user is attempting to login regularly from the login button
 router.post('/login', function(req,res) {
-	loginAuth(res, req, '')	
+	loginAuth(req, res, '')	
 })
 
 // this post request will run if a user was not logged in and tried to get into the details search
@@ -91,48 +101,75 @@ router.post('/login/:route/:isbn', function(req,res) {
 	// had to do a join because for some reason there's a spacing in the isbn variable
 	var url = req.params.route+'?'+req.params.isbn;
 	var finalUrl = url.split(' ').join('');
-	loginAuth(res, req, finalUrl);
-
+	loginAuth(req, res, finalUrl);
 })
+
+// When user clicks the logout button they will hit this route and end a session.
+router.get('/logout', function(req,res) {
+	req.session.logoutTime = getTime();
+	req.session.destroy(function(err) {
+		res.render('pages/logout.ejs', {req: null});
+	})
+});
 
 // loginAuth takes in the response and request arguments fromt the annonymous 
 // post request and the url argument is the url that they will redirect to.
 // Runs query to look up user info and check if password is correct.
-function loginAuth(res, req, url) {
+function loginAuth(req, res, url) {
 
+	// if use tries to log in with no input
+	if(req.body.email == '') {
+		res.render('pages/login', {req: req.session.user_id, noInput: true})
+	} else {
+		loginAuthQuery(req, res, url);
+	}
+}
+
+// run query to check
+function loginAuthQuery(req, res, url) {
+	
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
+		
+		// if email does not exist in db
+		if (results.length == 0 || error) {
+			if(url != ''){
 
-		if (error) throw error;
-
-		if (results.length == 0) {
-		  	res.send('try again');
+				// need to hand if user name is incorrect when they link from postings page
+				redirectToPostings(res, url)
+			} else {
+				res.render('pages/login', {req: req.session.user_id, error: true, email: true});
+			}
 		} else {
+			
 			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
+
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
 		  	      	req.session.routerInfo = [];
-		  	      	req.session.logInTime = getTime()
-
+		  	      	req.session.logInTime = getTime();
 		  	      	res.redirect('/'+url);
 
+		  	    } else if(url != '') {
+
+		  	    	// need to handle if email is correct but not password
+		  	    	redirectToPostings(res, url)
 		  	    } else {
-		  	      	res.redirect('/'+url);
+		  	      	res.render('pages/login', {req: req.session.user_id, error: true, email: true});
 		  	    }
 		  	});
 		}
 	});
 }
 
-// When user clicks the logout button they will hit this route and end a session.
-router.get('/logout', function(req,res) {
-
-	req.session.logoutTime = getTime();
-	req.session.destroy(function(err) {
-		res.render('pages/logout.ejs', {req: null});
-	})
-})
+function redirectToPostings(res, url) {
+	var queryStr = url.split("?")[1];
+	var queryArray = queryStr.split("&");
+	var searchTerm = queryArray[0].split("=")[1];
+	
+	res.redirect('/loginPage/searchResults/searchterms='+searchTerm);
+}
 
 module.exports = router;
 

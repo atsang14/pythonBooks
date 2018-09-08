@@ -8,29 +8,17 @@
 <% include ../partials/header %>
 
 <div class="card registerCard" align="center">
-		<h1>Register</h1>
-		<form method="POST" action="/register">
-			<input type="text" name="name" placeholder="Enter Name" class="form-control">
-			<input type="text" name="email" placeholder="Enter Your Email" class="form-control">
-			<input type="text" name="username" placeholder="Enter Your Full Name" class="form-control">
-			<input type="password" name="password" placeholder="Enter Your Password" class="form-control">
-			
-			<button class="btn btn-primary btn-md">submit</button>
-		</form>	
-		<!-- We check if there's a next route when rendered to this page. If there is "next route",
-		then just do normal login. If we want to generalize redirecting back to pages, we can just use action = login/ nextRoute -->
-		<!-- <% if(typeof nextRoute != 'undefined') { %>
-			<form method="POST" action="/login/<%=nextRoute%>/<%=isbn%>">
-		<% } else { %>
-			<form method="POST" action="/login">
-		<% } %>
-			<input type="text" name="email" placeholder="Enter Your Email" class="form-control">
-			<input type="password" name="password" placeholder="Enter Your Password" class="form-control">
-			
-			<button class="btn btn-primary btn-md">submit</button>
-		</form>	 -->
-	</div>
-
+	<h1>Register</h1>
+	<form method="POST" action="/register">
+		<input type="text" name="name" placeholder="Enter Name" class="form-control">
+		<input type="text" name="email" placeholder="Enter Your Email" class="form-control">
+		<input type="text" name="username" placeholder="Enter Your Full Name" class="form-control">
+		<input type="password" name="password" placeholder="Enter Your Password" class="form-control">
+		
+		<button class="btn btn-primary btn-md">submit</button>
+	</form>
+<% include ../partials/error %>
+</div>
 <% include ../partials/footer %>
 </body>
 </html>

@@ -4,7 +4,7 @@ var queryStr = searchUrl.split("?")[1];
 var queryArray = queryStr.split("&");
 var searchTerm = queryArray[0].split("=")[1];
 
-console.log(searchTerm);
+// console.log(searchTerm);
 
 $("#postings").css("display","none");
 $("#amazon").css("display","none");
