@@ -27,17 +27,17 @@
 
 	<div id = "searchDiv" align="center">
 		<div class="card-body">
-			<form action="/search" method="POST" name="searchform" >
+			<form action="/search" method="POST" name="searchform">
 				<br /> <br />
-				<!-- <div class="row">
+				<div class="row">
 					<label class="radio-inline">
-						<input type="radio" name="searchTitle">Book Name
+						<input type="radio" name="searchBy" value="title">Book Name
 					</label>
 					<label class="radio-inline">
-						<input type="radio" name="searchISBN" checked>ISBN
+						<input type="radio" name="searchBy" value="isbn" checked>ISBN
 					</label>
-				</div> -->
-				<input id="isbnSearch" type="text"  placeholder="search ISBN here" name="searchterms" class="form-control">
+				</div>
+				<input id="isbnSearch" type="text"  placeholder="Enter search term" name="searchterms" required class="form-control">
 				<button class="btn btn-primary btn-md">Search</button>
 				<!-- <input type="submit" name="SearchSubmit" value="Search"> -->
 
@@ -58,7 +58,6 @@
 </div>
 
 <% include ../partials/footer %>
-
 
 </body>
 </html>

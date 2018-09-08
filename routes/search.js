@@ -33,7 +33,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "ym",
+  password: "password",
   database: "pythonbooks_db"
 });
 
@@ -46,43 +46,62 @@ router.get('/', function(req, res) {
 
 router.post('/search', function(req, res){
 	console.log(req);
-	console.log("-----")
-	console.log(req.body.searchterms)
-	// console.log(req._parsedOriginalUrl.search);
-	// res.redirect('/searchResults'+req._parsedOriginalUrl.search);
-
-	// search tearm is the isbn
-	var query = connection.query(
-		"SELECT * FROM searches WHERE ?",
-		{ isbn: req.body.searchterms },
-		function(err, response) {
-			if(err) console.log(err);
-			if(response.length == 0) {
-				//searched isbn has not been searched before
-				var query = connection.query(
-					"INSERT INTO searches SET ?",
-					{ isbn: req.body.searchterms, number_of_search: 1 },
-					function(err2, response2){
-						if(err2) console.log(err2);
-					}
-				);
-			}else{
-				//searched isbn has been searched before
-				var query = connection.query(
-					"UPDATE searches SET ? WHERE ?",
-					[{ number_of_search: response[0].number_of_search + 1 },
-					{ isbn: req.body.searchterms}]	,
-					function(err2, response2){
-						if(err2) console.log(err2);
-					}
-				);
+	console.log("-----");
+	console.log(req.body.searchterms);
+	if (req.body.searchBy=="title"){
+		//route to intermediate page to narrow search results
+		res.redirect('/titleResults?searchterms='+req.body.searchterms);
+	} else {
+		// search term is the isbn
+		var query = connection.query(
+			"SELECT * FROM searches WHERE ?",
+			{ isbn: req.body.searchterms },
+			function(err, response) {
+				if(err) console.log(err);
+				if(response.length == 0) {
+					//searched isbn has not been searched before
+					var query = connection.query(
+						"INSERT INTO searches SET ?",
+						{ isbn: req.body.searchterms, number_of_search: 1 },
+						function(err2, response2){
+							if(err2) console.log(err2);
+						}
+					);
+				}else{
+					//searched isbn has been searched before
+					var query = connection.query(
+						"UPDATE searches SET ? WHERE ?",
+						[{ number_of_search: response[0].number_of_search + 1 },
+						{ isbn: req.body.searchterms}]	,
+						function(err2, response2){
+							if(err2) console.log(err2);
+						}
+					);
+				}
+				// console.log('you are on line 78');
+				// route: nextRoute
+				res.redirect('/searchResults?searchterms='+req.body.searchterms);
 			}
-			// console.log('you are on line 78');
-			// route: nextRoute
-			res.redirect('/searchResults?searchterms='+req.body.searchterms);
-		}
-	);
+		);
+	}
+	
 });
+
+router.get('/titleResults', function (req, res){
+	// console.log("within title results, req:")
+	// console.log(req);
+	// req.url: /titleResults?searchterms=flat%20pack
+	var queryStr = req.url.split("?")[1];
+	var queryArray = queryStr.split("&");
+	var searchTerm = queryArray[0].split("=")[1];
+	// res.render("pages/searchIntermediate", {searchTerm: searchTerm});
+	if (req.session.hasOwnProperty("user_id")){		
+		res.render("pages/searchIntermediate", {searchTerm: searchTerm, req: req.session.user_id});
+	} else {
+		res.render("pages/searchIntermediate", {searchTerm: searchTerm, req: null});
+		// res.render("pages/searchIntermediate", {searchTerm: searchTerm, req: null, nextRoute: route, searchTerm: isbn});
+	}
+})
 
 router.get('/searchResults', function (req, res){
 	// console.log("within search results, req:")
@@ -102,14 +121,9 @@ router.get('/searchResults', function (req, res){
 		{ isbn: searchTerm },
 		function(err, response) {
 			if(err) console.log(err);
-			// if(response.length ==0){
-			// 	//searched isbn has not been searched before
-				
-			// }else{
-				
-			// }
-		// console.log("response from searches table:");
-		// console.log(response);
+			
+			console.log("response from searches table:");
+			console.log(response);
 			
 			// if user is logged in, else
 			if (req.session.hasOwnProperty("user_id")){		

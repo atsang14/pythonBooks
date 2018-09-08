@@ -11,7 +11,9 @@
     <div id="content"></div>
 
     <div id="postings">
-        <% if (searchResults){ %>
+        <% if (searchResults.length==0){ %>
+            <p class="postTitle">No Available Postings</p>
+        <% } else { %>
             <p class="postTitle">Available Postings</p>
             <!-- <% searchResults.forEach(function(posting) { %>
                 <div>

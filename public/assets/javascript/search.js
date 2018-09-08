@@ -23,10 +23,22 @@ $.ajax({
     } else {
         var title = data.items[0].volumeInfo.title;
         // var isbn = data.items[0].volumeInfo.industryIdentifiers[1].identifier;
-        var authors = data.items[0].volumeInfo.authors;
-        var description = data.items[0].volumeInfo.description;
-        var thumbnail = data.items[0].volumeInfo.imageLinks.thumbnail;
-    
+        if (data.items[0].volumeInfo.hasOwnProperty("authors")){
+            authors = data.items[0].volumeInfo.authors;
+        } else {
+            authors = ["N/A"];
+        }
+        if (data.items[0].volumeInfo.hasOwnProperty("description")){
+            description = data.items[0].volumeInfo.description;
+        } else {
+            description = "No book description available."
+        }
+        if (data.items[0].volumeInfo.hasOwnProperty("imageLinks")){
+            thumbnail = data.items[0].volumeInfo.imageLinks.thumbnail;
+        } else {
+            thumbnail = "/assets/images/noBookIMG.png";
+        }
+        
         $("#content").append(
             $("<div>").html('<img src="'+thumbnail+'" alt="thumbnail">')
         );
