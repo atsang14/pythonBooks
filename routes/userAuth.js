@@ -115,7 +115,8 @@ router.get('/logout', function(req,res) {
 // Runs query to look up user info and check if password is correct.
 function loginAuth(req, res, url) {
 
-	if(req.body.name == '' || req.body.email == '' || req.body.username == '') {
+	// if use tries to log in with no input
+	if(req.body.email == '') {
 		res.render('pages/login', {req: req.session.user_id, noInput: true})
 	}
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
