@@ -74,18 +74,19 @@ router.post('/register', function(req,res) {
 	if(req.body.name == '' || req.body.email == '' || req.body.username == '') {
 		res.render('pages/register', {req: req.session.user_id, noInput: true})
 	}
-
-	// encrypt password
-	bcrypt.genSalt(10, function(err, salt) {
-		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
-			
-			connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
+	else {
+		// encrypt password
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 				
-				if(error) res.render('pages/register', {req: req.session.user_id, error: true});
-				else res.render('pages/login', {req: req.session.user_id});
+				connection.query('INSERT INTO users (name, email, username, password, rating_value, rating_number) VALUES (?, ?, ?, ?, 0.0, 0)', [req.body.name, req.body.email, req.body.username, p_hash], function (error, results, fields) {
+					
+					if(error) res.render('pages/register', {req: req.session.user_id, error: true});
+					else res.render('pages/login', {req: req.session.user_id});
+				});
 			});
 		});
-	});
+	}
 });
 
 // if a user is attempting to login regularly from the login button
@@ -118,28 +119,29 @@ function loginAuth(req, res, url) {
 	// if use tries to log in with no input
 	if(req.body.email == '') {
 		res.render('pages/login', {req: req.session.user_id, noInput: true})
+	} else {
+		connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
+
+			if (results.length == 0 || error) {
+			  	res.render('pages/login', {req: req.session.user_id, error: true});
+			} else {
+
+				// compare encryptions because password is encrypted in the database.
+			  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
+			  	    if (result == true) {
+			  	    	req.session.user_id = results[0].id;
+			  	      	req.session.email = results[0].email;
+			  	      	req.session.routerInfo = [];
+			  	      	req.session.logInTime = getTime();
+			  	      	res.redirect('/'+url);
+
+			  	    } else {
+			  	      	res.render('pages/login', {req: req.session.user_id, error: true});
+			  	    }
+			  	});
+			}
+		});
 	}
-	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
-
-		if (results.length == 0 || error) {
-		  	res.render('pages/login', {req: req.session.user_id, error: true});
-		} else {
-
-			// compare encryptions because password is encrypted in the database.
-		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
-		  	    if (result == true) {
-		  	    	req.session.user_id = results[0].id;
-		  	      	req.session.email = results[0].email;
-		  	      	req.session.routerInfo = [];
-		  	      	req.session.logInTime = getTime();
-		  	      	res.redirect('/'+url);
-
-		  	    } else {
-		  	      	res.render('pages/login', {req: req.session.user_id, error: true});
-		  	    }
-		  	});
-		}
-	});
 }
 
 // function registerQuery(originalReq, originalRes) {
