@@ -127,15 +127,23 @@ function loginAuth(req, res, url) {
 
 // run query to check
 function loginAuthQuery(req, res, url) {
+	
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
-
-		// if does not exist in db
+		
+		// if email does not exist in db
 		if (results.length == 0 || error) {
-		  	res.render('pages/login', {req: req.session.user_id, error: true, email: true});
-		} else {
+			if(url != ''){
 
+				// need to hand if user name is incorrect when they link from postings page
+				redirectToPostings(res, url)
+			} else {
+				res.render('pages/login', {req: req.session.user_id, error: true, email: true});
+			}
+		} else {
+			
 			// compare encryptions because password is encrypted in the database.
 		  	bcrypt.compare(req.body.password, results[0].password, function(err, result) {
+
 		  	    if (result == true) {
 		  	    	req.session.user_id = results[0].id;
 		  	      	req.session.email = results[0].email;
@@ -143,12 +151,24 @@ function loginAuthQuery(req, res, url) {
 		  	      	req.session.logInTime = getTime();
 		  	      	res.redirect('/'+url);
 
+		  	    } else if(url != '') {
+
+		  	    	// need to handle if email is correct but not password
+		  	    	redirectToPostings(res, url)
 		  	    } else {
 		  	      	res.render('pages/login', {req: req.session.user_id, error: true, email: true});
 		  	    }
 		  	});
 		}
 	});
+}
+
+function redirectToPostings(res, url) {
+	var queryStr = url.split("?")[1];
+	var queryArray = queryStr.split("&");
+	var searchTerm = queryArray[0].split("=")[1];
+	
+	res.redirect('/loginPage/searchResults/searchterms='+searchTerm);
 }
 
 module.exports = router;
