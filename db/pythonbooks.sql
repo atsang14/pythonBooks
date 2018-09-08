@@ -60,6 +60,17 @@ VALUES
 ("0134093410", 0);
 
 SELECT * FROM searches;
+
+CREATE TABLE userSession(
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  routes TEXT NOT NULL ,
+  sessionTime TEXT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+DESCRIBE userSession;
 -- mysql.server start
 -- mysql.server stop
 -- mysql -u root

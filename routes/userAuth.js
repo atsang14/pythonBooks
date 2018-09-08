@@ -110,9 +110,25 @@ router.post('/login/:route/:isbn', function(req,res) {
 
 // When user clicks the logout button they will hit this route and end a session.
 router.get('/logout', function(req,res) {
-	req.session.logoutTime = getTime();
-	req.session.destroy(function(err) {
-		res.render('pages/logout.ejs', {req: null});
+
+	var info = JSON.stringify(req.session.routerInfo);
+	var start = req.session.logInTime;
+	var end = getTime();
+	var time = start + ' - ' + end;
+	var text = '';
+
+	console.log(info);
+	for(var i = 0; i < info.length; i++ ) {
+		text += info[i];
+	}
+
+	var query = "INSERT INTO userSession(user_id, routes, sessionTime) values ('"+req.session.user_id+"', '"+text+"', '"+time+"')"
+
+	connection.query(query, function(error, results, fields) {
+		req.session.destroy(function(err) {
+			if(err) console.log(err);
+			res.render('pages/logout.ejs', {req: null});
+		})
 	})
 });
 
