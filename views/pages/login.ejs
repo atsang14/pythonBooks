@@ -22,9 +22,7 @@ then just do normal login. If we want to generalize redirecting back to pages, w
 		
 		<button class="btn btn-primary btn-md">submit</button>
 	</form>	
-<% if(typeof error != 'undefined') { %>
-	<h3><font color="red">Invalid Email or password. Please try again.</h3>
-<% } %>
+<% include ../partials/error %>
 </div>
 <% include ../partials/footer %>
 <script type="text/javascript" src="/assets/javascript/error.js"></script>

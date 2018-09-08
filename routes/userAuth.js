@@ -69,7 +69,13 @@ router.get('/registerPage', function(req,res) {
 
 // This route happens when user enters register information from register.ejs file in views/pages
 router.post('/register', function(req,res) {
-	
+
+	// if user tries to register without any input
+	if(req.body.name == '' || req.body.email == '' || req.body.username == '') {
+		res.render('pages/register', {req: req.session.user_id, noInput: true})
+	}
+
+	// encrypt password
 	bcrypt.genSalt(10, function(err, salt) {
 		bcrypt.hash(req.body.password, salt, function(err, p_hash) {
 			
@@ -84,7 +90,7 @@ router.post('/register', function(req,res) {
 
 // if a user is attempting to login regularly from the login button
 router.post('/login', function(req,res) {
-	loginAuth(res, req, '')	
+	loginAuth(req, res, '')	
 })
 
 // this post request will run if a user was not logged in and tried to get into the details search
@@ -93,7 +99,7 @@ router.post('/login/:route/:isbn', function(req,res) {
 	// had to do a join because for some reason there's a spacing in the isbn variable
 	var url = req.params.route+'?'+req.params.isbn;
 	var finalUrl = url.split(' ').join('');
-	loginAuth(res, req, finalUrl);
+	loginAuth(req, res, finalUrl);
 })
 
 // When user clicks the logout button they will hit this route and end a session.
@@ -107,8 +113,11 @@ router.get('/logout', function(req,res) {
 // loginAuth takes in the response and request arguments fromt the annonymous 
 // post request and the url argument is the url that they will redirect to.
 // Runs query to look up user info and check if password is correct.
-function loginAuth(res, req, url) {
+function loginAuth(req, res, url) {
 
+	if(req.body.name == '' || req.body.email == '' || req.body.username == '') {
+		res.render('pages/login', {req: req.session.user_id, noInput: true})
+	}
 	connection.query('SELECT * FROM users WHERE email = ?', [req.body.email], function(error, results, fields) {
 
 		if (results.length == 0 || error) {

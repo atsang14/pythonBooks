@@ -17,11 +17,8 @@
 		
 		<button class="btn btn-primary btn-md">submit</button>
 	</form>
-<% if(typeof error != 'undefined') { %>
-	<h3><font color="red">Email is already in use, please register with another email</h3>
-<% } %>
+<% include ../partials/error %>
 </div>
-
 <% include ../partials/footer %>
 </body>
 </html>
